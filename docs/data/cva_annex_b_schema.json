@@ -1,0 +1,259 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://elexon.co.uk/bsc/smart/cva-data-catalogue-annex-b/v26.0",
+  "title": "CVA Data Catalogue Annex B: Data Dictionary",
+  "description": "Machine-readable representation of the Central Volume Allocation Data Catalogue Annex B (Data Dictionary) V26.0, as part of the Balancing and Settlement Code. This schema supports Level 2-3 of the IEC/ISO SMART standards utility model.",
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "description": "Document-level metadata for this data catalogue",
+      "properties": {
+        "document_title": {
+          "type": "string"
+        },
+        "document_reference": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "effective_from_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "DRAFT",
+            "LIVE",
+            "SUPERSEDED"
+          ]
+        },
+        "smart_level": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4,
+          "description": "SMART standards utility model level (IEC/ISO)"
+        },
+        "parent_code": {
+          "type": "string"
+        },
+        "bsc_section_reference": {
+          "type": "string"
+        },
+        "copyright_holder": {
+          "type": "string"
+        },
+        "associated_documents": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "relationship": {
+                "type": "string",
+                "enum": [
+                  "parent",
+                  "sibling",
+                  "child",
+                  "cross-reference"
+                ]
+              },
+              "identifier": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "document_title",
+        "version",
+        "effective_from_date",
+        "status",
+        "smart_level"
+      ]
+    },
+    "acronyms": {
+      "type": "object",
+      "description": "Glossary of acronyms used in this catalogue, with provenance",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "expansion": {
+            "type": "string"
+          },
+          "source_code": {
+            "type": "string"
+          },
+          "bsc_defined_term": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "data_items": {
+      "type": "array",
+      "description": "The data items defined or referenced in this catalogue",
+      "items": {
+        "$ref": "#/$defs/DataItem"
+      }
+    }
+  },
+  "$defs": {
+    "DataItem": {
+      "type": "object",
+      "description": "A single data item in the CVA Data Dictionary",
+      "properties": {
+        "item_name": {
+          "type": "string"
+        },
+        "item_reference": {
+          "type": "string",
+          "pattern": "^(N\\d{4}|T\\d{4})$"
+        },
+        "defined_in": {
+          "type": "string",
+          "enum": [
+            "NETA IDD Part 1",
+            "CVA Data Catalogue Annex B",
+            "NDFC Annex B"
+          ]
+        },
+        "item_ownership": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "units": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "domain": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "Integer",
+            "Real",
+            "Text",
+            "Date",
+            "DateTime",
+            "Boolean",
+            "NGCDateTime",
+            null
+          ]
+        },
+        "logical_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "physical_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "validation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "smart_classification": {
+          "type": "object",
+          "description": "SMART Level 3 semantic classification (to be populated by SME review)",
+          "properties": {
+            "semantic_type": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "identifier",
+                "measurement",
+                "financial",
+                "temporal",
+                "status",
+                "configuration",
+                "descriptive",
+                "calculated",
+                "reference",
+                null
+              ]
+            },
+            "is_computable": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "bsc_section_references": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "ontology_candidate": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "related_items": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "neta_idd_full_type": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Original NETA IDD data type (e.g. decimal(10,3), text(255))"
+        },
+        "valid_set_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Name of the valid set constraining this item's values"
+        },
+        "valid_set_values": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "description": "Enumerated valid values from NETA IDD"
+        }
+      },
+      "required": [
+        "item_name",
+        "item_reference",
+        "defined_in"
+      ]
+    }
+  },
+  "required": [
+    "metadata",
+    "data_items"
+  ]
+}
