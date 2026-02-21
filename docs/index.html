@@ -3,243 +3,548 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BSC SMART Standards — Data Catalogue Package</title>
-
+  <title>BSC SMART Standards – Data Catalogue Package</title>
+  <meta name="description" content="Interactive overview of machine-readable BSC data catalogues (CVA Annex B, BMRS, SVA Vol 2) and their JSON Schemas." />
   <style>
     :root{
-      --bg:#0b0f17; --panel:#111827; --panel2:#0f172a; --text:#e5e7eb;
-      --muted:#9ca3af; --accent:#60a5fa; --border:#1f2937;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      --bg:#0b1020;
+      --panel:#111a33;
+      --panel2:#0f1730;
+      --text:#e9ecf5;
+      --muted:#b7bfd6;
+      --accent:#7aa2ff;
+      --warn:#ffbf47;
+      --good:#4cd07d;
+      --bad:#ff6b6b;
+      --border:rgba(255,255,255,.12);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      --shadow: 0 12px 28px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg:#f7f8fc;
+        --panel:#ffffff;
+        --panel2:#ffffff;
+        --text:#111528;
+        --muted:#4a5568;
+        --accent:#2b6cff;
+        --warn:#b45309;
+        --good:#047857;
+        --bad:#b91c1c;
+        --border:rgba(17,21,40,.12);
+        --shadow: 0 10px 24px rgba(17,21,40,.12);
+      }
     }
     *{box-sizing:border-box}
-    body{margin:0; font-family:var(--sans); background:var(--bg); color:var(--text);}
-    header{
-      padding:18px 20px;
-      border-bottom:1px solid var(--border);
-      background:linear-gradient(180deg, rgba(17,24,39,.95), rgba(17,24,39,.75));
-    }
-    header h1{margin:0; font-size:18px}
-    header p{margin:6px 0 0; font-size:13px; color:var(--muted)}
-    .wrap{display:grid; grid-template-columns: 360px 1fr; min-height:100vh;}
-    .side{
-      padding:16px;
-      border-right:1px solid var(--border);
-      background:rgba(17,24,39,.5);
-    }
-    .main{padding:16px;}
-    .card{
-      background:rgba(15,23,42,.65);
-      border:1px solid var(--border);
-      border-radius:12px;
-      padding:14px;
-      margin-bottom:14px;
-    }
-    .label{font-size:12px; color:var(--muted); margin-bottom:6px;}
-    .mono{font-family:var(--mono); font-size:12px;}
-    .chip{
-      display:inline-block;
-      padding:6px 10px;
-      margin:4px 6px 4px 0;
-      border-radius:999px;
-      border:1px solid var(--border);
-      background:rgba(11,18,32,.85);
-      cursor:pointer;
-      font-size:12px;
-    }
-    .chip[aria-selected="true"]{
-      border-color:var(--accent);
-      background:rgba(96,165,250,.15);
-    }
-    input{
-      width:100%;
-      padding:8px;
-      border-radius:8px;
-      border:1px solid var(--border);
-      background:rgba(15,23,42,.85);
+    body{
+      margin:0;
+      font-family:var(--sans);
+      background:radial-gradient(1200px 600px at 20% 10%, rgba(122,162,255,.18), transparent 60%),
+                 radial-gradient(900px 500px at 80% 0%, rgba(76,208,125,.10), transparent 55%),
+                 var(--bg);
       color:var(--text);
+      line-height:1.5;
     }
-    details{
-      margin-top:8px;
-      padding:6px 10px;
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    header{
+      padding:40px 20px 18px;
+      max-width:1100px;
+      margin:0 auto;
+    }
+    .title{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      align-items:flex-end;
+      justify-content:space-between;
+    }
+    h1{
+      margin:0;
+      font-size:clamp(24px, 3.2vw, 36px);
+      letter-spacing:-0.02em;
+    }
+    .subtitle{
+      margin:10px 0 0;
+      color:var(--muted);
+      max-width:950px;
+    }
+    .pillbar{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px}
+    .pill{
+      padding:8px 12px;
       border:1px solid var(--border);
-      border-radius:8px;
-      background:rgba(11,18,32,.45);
-      font-size:12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+      font-size:13px;
     }
-    summary{cursor:pointer}
-    .badge{
-      font-size:11px;
+    .container{
+      max-width:1100px;
+      margin:0 auto;
+      padding:0 20px 60px;
+    }
+    .banner{
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--border);
+      border-left:6px solid var(--warn);
+      padding:14px 16px;
+      border-radius:14px;
+      box-shadow:var(--shadow);
+      margin:14px 0 24px;
+    }
+    .banner strong{color:var(--text)}
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:16px;
+    }
+    .card{
+      grid-column: span 12;
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .card .hd{
+      padding:16px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      background:rgba(0,0,0,.06);
+      border-bottom:1px solid var(--border);
+    }
+    .card .hd h2{
+      margin:0;
+      font-size:16px;
+      letter-spacing:-0.01em;
+    }
+    .card .bd{padding:16px 18px}
+    .kvs{
+      display:grid;
+      grid-template-columns: 170px 1fr;
+      gap:8px 14px;
+      font-size:14px;
+    }
+    .k{color:var(--muted)}
+    .v code{
+      font-family:var(--mono);
+      font-size:12.5px;
+      background:rgba(255,255,255,.06);
       padding:2px 6px;
+      border-radius:8px;
+      border:1px solid var(--border);
+    }
+    .actions{display:flex; gap:10px; flex-wrap:wrap}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:9px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      font-size:13px;
+      cursor:pointer;
+    }
+    .btn:hover{background:rgba(255,255,255,.07)}
+    .btn.secondary{color:var(--muted)}
+    .tag{
+      font-size:12px;
+      padding:4px 8px;
       border-radius:999px;
       border:1px solid var(--border);
       color:var(--muted);
-      margin-left:8px;
     }
-    .small{font-size:12px; color:var(--muted);}
-    @media (max-width: 1000px){
-      .wrap{grid-template-columns:1fr;}
-      .side{border-right:none;border-bottom:1px solid var(--border);}
+    .tag.good{color:var(--good); border-color:rgba(76,208,125,.35); background:rgba(76,208,125,.08)}
+    .tag.warn{color:var(--warn); border-color:rgba(255,191,71,.35); background:rgba(255,191,71,.08)}
+    .tag.bad{color:var(--bad); border-color:rgba(255,107,107,.35); background:rgba(255,107,107,.08)}
+    .split{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .mono{font-family:var(--mono)}
+    .muted{color:var(--muted)}
+    .sectionTitle{
+      margin:24px 0 10px;
+      font-size:14px;
+      color:var(--muted);
+      letter-spacing:.06em;
+      text-transform:uppercase;
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:14px;
+      overflow:hidden;
+      border-radius:14px;
+      border:1px solid var(--border);
+    }
+    th, td{
+      padding:10px 12px;
+      border-bottom:1px solid var(--border);
+      vertical-align:top;
+    }
+    th{
+      text-align:left;
+      color:var(--muted);
+      font-weight:600;
+      background:rgba(255,255,255,.04);
+    }
+    tr:last-child td{border-bottom:none}
+    .small{font-size:12.5px}
+    .error{
+      color:var(--bad);
+      font-family:var(--mono);
+      white-space:pre-wrap;
+      font-size:12.5px;
+    }
+    .footer{
+      margin-top:30px;
+      color:var(--muted);
+      font-size:13px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      justify-content:space-between;
+      align-items:center;
+    }
+    @media (min-width: 900px){
+      .card.span6{grid-column: span 6;}
+      .card.span4{grid-column: span 4;}
     }
   </style>
 </head>
 
 <body>
-
-<header>
-  <h1>BSC SMART Standards — Data Catalogue Package</h1>
-  <p>
-    Machine-readable JSON Schemas supporting the Digital Rulebook initiative.
-    This repository demonstrates progression from SMART Level 2 (structured digital artefacts)
-    towards Level 3 (machine-readable, validation-ready rule components).
-  </p>
-</header>
-
-<div class="wrap">
-
-  <aside class="side">
-
-    <div class="card">
-      <div class="label">Purpose</div>
-      <div class="small">
-        This package provides structured JSON Schema representations of selected BSC
-        artefacts to support interoperability, validation, and future automation.
-        <br><br>
-        Scope currently includes:
-        <ul>
-          <li>CVA Annex B</li>
-          <li>BMRS</li>
-          <li>SVA Volume 2</li>
-        </ul>
-        These schemas form part of the broader transition toward a machine-readable
-        Digital Rulebook.
+  <header>
+    <div class="title">
+      <div>
+        <h1>BSC SMART Standards – Data Catalogue Package</h1>
+        <p class="subtitle">
+          This GitHub Pages site provides a lightweight, interactive overview of the machine-readable (SMART Level 2→3)
+          JSON catalogues and their JSON Schemas for CVA, BMRS and SVA.
+        </p>
+      </div>
+      <div class="pillbar">
+        <div class="pill">BSC • Digital Rulebook</div>
+        <div class="pill">SMART utility model</div>
+        <div class="pill">JSON + JSON Schema</div>
       </div>
     </div>
 
-    <div class="card">
-      <div class="label">Artefacts</div>
-      <div id="fileChips"></div>
+    <div class="banner">
+      <strong>What you’re looking at</strong><br/>
+      The catalogues are published here as raw JSON for downstream validation, parsing and enrichment.
+      This page reads <span class="mono">metadata</span> and <span class="mono">statistics</span> from each catalogue so stakeholders can
+      quickly understand coverage and maturity.
     </div>
+  </header>
 
+  <main class="container">
+    <div class="sectionTitle">At a glance</div>
     <div class="card">
-      <div class="label">Search</div>
-      <input id="searchBox" placeholder="Search keys or values..." />
-      <div class="small" style="margin-top:6px;">
-        Client-side filtering across full JSON document.
+      <div class="hd">
+        <h2>Package summary</h2>
+        <div class="split">
+          <span id="buildStatus" class="tag warn">Loading…</span>
+          <a class="btn secondary" href="./README.md">Open README.md</a>
+        </div>
+      </div>
+      <div class="bd">
+        <table id="summaryTable" aria-label="Package summary table">
+          <thead>
+            <tr>
+              <th>Catalogue</th>
+              <th>Version / Effective</th>
+              <th>Status / SMART level</th>
+              <th>Primary counts</th>
+              <th>Key enrichments</th>
+              <th>Open</th>
+            </tr>
+          </thead>
+          <tbody id="summaryBody">
+            <tr><td colspan="6" class="muted">Loading catalogues…</td></tr>
+          </tbody>
+        </table>
+        <p class="small muted" style="margin:12px 2px 0;">
+          Tip: open any JSON file directly to view raw content, or use the schema links to validate with your preferred tooling (e.g. AJV).
+        </p>
       </div>
     </div>
 
+    <div class="sectionTitle">Catalogues</div>
+    <div class="grid" id="cards"></div>
+
+    <div class="sectionTitle">Schemas</div>
     <div class="card">
-      <div class="label">SMART Standards Context</div>
-      <div class="small">
-        <b>Level 2:</b> Structured digital documents<br>
-        <b>Level 3:</b> Machine-readable schemas + validation logic<br>
-        <b>Level 4:</b> Ontology-linked semantic reasoning (future phase)
+      <div class="hd">
+        <h2>JSON Schemas (Draft 2020-12)</h2>
+        <div class="split">
+          <span class="tag good">Reusable</span>
+        </div>
+      </div>
+      <div class="bd">
+        <table aria-label="Schema files">
+          <thead>
+            <tr>
+              <th>File</th>
+              <th>Applies to</th>
+              <th>Open</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>cva_annex_b_schema.json</code></td>
+              <td>CVA Data Catalogue – Annex B (Data Dictionary)</td>
+              <td class="actions">
+                <a class="btn" href="./cva_annex_b_schema.json">Open</a>
+              </td>
+            </tr>
+            <tr>
+              <td><code>bmrs_schema.json</code></td>
+              <td>BMRS Data Catalogue (reporting items, calculated items, functional rules)</td>
+              <td class="actions">
+                <a class="btn" href="./bmrs_schema.json">Open</a>
+              </td>
+            </tr>
+            <tr>
+              <td><code>sva_schema.json</code></td>
+              <td>SVA Data Catalogue – Volume 2 (Data Items + flow mappings)</td>
+              <td class="actions">
+                <a class="btn" href="./sva_schema.json">Open</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top:14px">
+          <div class="muted small">Validation note</div>
+          <div class="small">
+            Each catalogue JSON includes <span class="mono">metadata</span> and structured arrays of items. Schemas are intended for:
+            (a) CI validation; (b) editor tooling; and (c) consistent downstream transformation (e.g. RDF/SHACL later).
+          </div>
+        </div>
       </div>
     </div>
 
-  </aside>
-
-  <main class="main">
-
+    <div class="sectionTitle">Downloads</div>
     <div class="card">
-      <div class="label">Interactive Schema Viewer</div>
-      <div id="tree"></div>
+      <div class="hd">
+        <h2>Raw JSON artefacts</h2>
+        <div class="split"><span class="tag">Direct links</span></div>
+      </div>
+      <div class="bd">
+        <div class="actions">
+          <a class="btn" href="./cva_annex_b_data.json">cva_annex_b_data.json</a>
+          <a class="btn" href="./bmrs_data_catalogue.json">bmrs_data_catalogue.json</a>
+          <a class="btn" href="./sva_data_catalogue.json">sva_data_catalogue.json</a>
+        </div>
+      </div>
     </div>
 
+    <div class="footer">
+      <div>Published via GitHub Pages • Repo root <span class="mono">index.html</span></div>
+      <div class="small muted">This page renders from files in the repository at runtime (no build step required).</div>
+    </div>
   </main>
 
-</div>
+  <script>
+    const catalogues = [
+      {
+        key: "CVA",
+        file: "./cva_annex_b_data.json",
+        schema: "./cva_annex_b_schema.json",
+        label: "CVA Data Catalogue: Annex B (Data Dictionary)",
+        source: "CVA DC Annex B V26.0 + NETA IDD Part 1 V45.0",
+        primaryCount: (j) => `${j?.metadata?.statistics?.total_data_items ?? "—"} data items`,
+        enrichment: (j) => {
+          const s = j?.metadata?.statistics || {};
+          return `Types enriched (NETA IDD: ${s.items_from_neta_idd ?? "—"}), valid sets: ${s.items_with_valid_sets ?? "—"}, ontology candidates: ${s.ontology_candidates ?? "—"}`;
+        }
+      },
+      {
+        key: "BMRS",
+        file: "./bmrs_data_catalogue.json",
+        schema: "./bmrs_schema.json",
+        label: "BMRS Data Catalogue (Reporting Requirements)",
+        source: "BMRS DC V5.0",
+        primaryCount: (j) => {
+          const s = j?.metadata?.statistics || {};
+          const r = s.total_reporting_items ?? "—";
+          const c = s.calculated_data_items ?? "—";
+          const f = s.functional_rules_extracted ?? "—";
+          return `${r} reporting • ${c} calculated • ${f} rules`;
+        },
+        enrichment: (j) => {
+          const s = j?.metadata?.statistics || {};
+          return `Provider attribution, section refs, table breakdown, ontology candidates: ${s.ontology_candidates ?? "—"}`;
+        }
+      },
+      {
+        key: "SVA",
+        file: "./sva_data_catalogue.json",
+        schema: "./sva_schema.json",
+        label: "SVA Data Catalogue: Volume 2 (Data Items)",
+        source: "SVA DC Vol 2 V52.0",
+        primaryCount: (j) => `${j?.metadata?.statistics?.total_data_items ?? "—"} data items`,
+        enrichment: (j) => {
+          const s = j?.metadata?.statistics || {};
+          return `Flow usage counts: ${s.items_with_data_flow_mapping ?? "—"}, NETA cross-refs: ${s.items_with_neta_idd_crossref ?? "—"}, ontology candidates: ${s.ontology_candidates ?? "—"}`;
+        }
+      }
+    ];
 
-<script>
-const FILES = [
-  { key: "CVA Annex B Schema", path: "data/cva_annex_b_schema.json" },
-  { key: "BMRS Schema", path: "data/bmrs_schema.json" },
-  { key: "SVA Vol 2 Schema", path: "data/sva_schema.json" }
-];
+    const elSummaryBody = document.getElementById("summaryBody");
+    const elCards = document.getElementById("cards");
+    const elBuildStatus = document.getElementById("buildStatus");
 
-const fileChips = document.getElementById("fileChips");
-const tree = document.getElementById("tree");
-const searchBox = document.getElementById("searchBox");
-
-let currentJSON = null;
-
-FILES.forEach((f, i) => {
-  const chip = document.createElement("div");
-  chip.className = "chip";
-  chip.textContent = f.key;
-  chip.setAttribute("aria-selected", i === 0);
-  chip.onclick = () => loadFile(i);
-  fileChips.appendChild(chip);
-});
-
-async function loadFile(i){
-  [...fileChips.children].forEach((c, idx) =>
-    c.setAttribute("aria-selected", idx === i)
-  );
-
-  const res = await fetch(FILES[i].path);
-  currentJSON = await res.json();
-  renderTree(currentJSON);
-}
-
-function renderTree(obj, parent = tree){
-  parent.innerHTML = "";
-  Object.entries(obj).forEach(([k,v])=>{
-    const details = document.createElement("details");
-    const summary = document.createElement("summary");
-    summary.innerHTML = `${k} <span class="badge">${typeof v}</span>`;
-    details.appendChild(summary);
-
-    if(typeof v === "object" && v !== null){
-      const div = document.createElement("div");
-      div.style.marginLeft = "12px";
-      renderTree(v, div);
-      details.appendChild(div);
-    } else {
-      const val = document.createElement("div");
-      val.className = "mono";
-      val.textContent = v;
-      val.style.marginLeft = "12px";
-      details.appendChild(val);
+    function tagForStatus(status){
+      if (!status) return { cls: "warn", text: "Unknown" };
+      const u = String(status).toUpperCase();
+      if (u === "LIVE") return { cls: "good", text: "LIVE" };
+      if (u === "DRAFT") return { cls: "warn", text: "DRAFT" };
+      if (u === "SUPERSEDED") return { cls: "bad", text: "SUPERSEDED" };
+      return { cls: "warn", text: u };
     }
 
-    parent.appendChild(details);
-  });
-}
+    function fmtDate(iso){
+      if (!iso) return "—";
+      try{
+        const d = new Date(iso);
+        if (Number.isNaN(d.getTime())) return iso;
+        return d.toISOString().slice(0,10);
+      }catch{ return iso; }
+    }
 
-searchBox.addEventListener("input", e=>{
-  const term = e.target.value.toLowerCase();
-  if(!currentJSON) return;
+    function safe(v){ return (v === null || v === undefined || v === "") ? "—" : v; }
 
-  if(!term){
-    renderTree(currentJSON);
-    return;
-  }
+    function makeCard(meta, stats, cfg){
+      const statusTag = tagForStatus(meta.status);
+      const smart = safe(meta.smart_level);
+      const eff = fmtDate(meta.effective_from_date);
 
-  const filtered = JSON.parse(JSON.stringify(currentJSON));
-  const filterObj = obj=>{
-    for(const key in obj){
-      if(typeof obj[key] === "object"){
-        filterObj(obj[key]);
+      const html = `
+        <div class="card span6">
+          <div class="hd">
+            <h2>${cfg.key} • ${meta.document_reference ? `<span class="muted">${meta.document_reference}</span>` : cfg.label}</h2>
+            <div class="split">
+              <span class="tag ${statusTag.cls}">${statusTag.text}</span>
+              <span class="tag">SMART L${smart}</span>
+            </div>
+          </div>
+          <div class="bd">
+            <div class="kvs">
+              <div class="k">Title</div><div class="v">${safe(meta.document_title)}</div>
+              <div class="k">Version</div><div class="v"><code>${safe(meta.version)}</code></div>
+              <div class="k">Effective from</div><div class="v"><code>${eff}</code></div>
+              <div class="k">BSC reference</div><div class="v">${safe(meta.bsc_section_reference)}</div>
+              <div class="k">Counts</div><div class="v">${cfg.primaryCount({metadata:{statistics:stats}})}</div>
+              <div class="k">Notes</div><div class="v">${safe(meta.smart_level_notes)}</div>
+            </div>
+
+            <div style="margin-top:14px" class="actions">
+              <a class="btn" href="${cfg.file}">Open JSON</a>
+              <a class="btn secondary" href="${cfg.schema}">Open schema</a>
+            </div>
+          </div>
+        </div>
+      `;
+      return html;
+    }
+
+    function makeSummaryRow(meta, stats, cfg){
+      const statusTag = tagForStatus(meta.status);
+      const eff = fmtDate(meta.effective_from_date);
+      const versionEff = `${safe(meta.version)} / ${eff}`;
+      const statusSmart = `${statusTag.text} / L${safe(meta.smart_level)}`;
+      const counts = cfg.primaryCount({metadata:{statistics:stats}});
+      const enrich = cfg.enrichment({metadata:{statistics:stats}});
+
+      return `
+        <tr>
+          <td><strong>${cfg.key}</strong><br/><span class="muted small">${safe(meta.document_reference)}</span></td>
+          <td><code>${versionEff}</code></td>
+          <td><span class="tag ${statusTag.cls}">${statusTag.text}</span> <span class="tag">L${safe(meta.smart_level)}</span></td>
+          <td>${counts}</td>
+          <td class="small">${enrich}</td>
+          <td class="actions">
+            <a class="btn" href="${cfg.file}">JSON</a>
+            <a class="btn secondary" href="${cfg.schema}">Schema</a>
+          </td>
+        </tr>
+      `;
+    }
+
+    async function loadJSON(path){
+      const r = await fetch(path, { cache: "no-store" });
+      if (!r.ok) throw new Error(`Fetch failed (${r.status}) for ${path}`);
+      return r.json();
+    }
+
+    async function main(){
+      elSummaryBody.innerHTML = "";
+      elCards.innerHTML = "";
+
+      const results = [];
+      const errors = [];
+
+      for (const cfg of catalogues){
+        try{
+          const j = await loadJSON(cfg.file);
+          const meta = j.metadata || {};
+          const stats = meta.statistics || {};
+          results.push({ cfg, meta, stats });
+        }catch(e){
+          errors.push({ cfg, error: e });
+        }
       }
-      if(
-        key.toLowerCase().includes(term) ||
-        String(obj[key]).toLowerCase().includes(term)
-      ){
-        return;
+
+      // Summary table
+      if (results.length){
+        elSummaryBody.innerHTML = results.map(r => makeSummaryRow(r.meta, r.stats, r.cfg)).join("");
       } else {
-        delete obj[key];
+        elSummaryBody.innerHTML = `<tr><td colspan="6" class="error">No catalogues could be loaded.</td></tr>`;
+      }
+
+      // Cards
+      if (results.length){
+        elCards.innerHTML = results.map(r => makeCard(r.meta, r.stats, r.cfg)).join("");
+      }
+
+      // Status
+      if (errors.length === 0){
+        elBuildStatus.className = "tag good";
+        elBuildStatus.textContent = "All catalogues loaded";
+      } else if (results.length){
+        elBuildStatus.className = "tag warn";
+        elBuildStatus.textContent = `Loaded with ${errors.length} error(s)`;
+        // Append an error panel
+        const errCard = document.createElement("div");
+        errCard.className = "card";
+        errCard.innerHTML = `
+          <div class="hd"><h2>Load errors</h2><span class="tag warn">Non-fatal</span></div>
+          <div class="bd">
+            <div class="error">${errors.map(x => `${x.cfg.key}: ${x.error.message}`).join("\n")}</div>
+            <div class="small muted" style="margin-top:10px">
+              If this is GitHub Pages, confirm these files exist in the repo root and are published by Pages (and not blocked by a build step).
+            </div>
+          </div>
+        `;
+        document.querySelector("main .container")?.appendChild(errCard);
+      } else {
+        elBuildStatus.className = "tag bad";
+        elBuildStatus.textContent = "Failed to load catalogues";
       }
     }
-  };
 
-  filterObj(filtered);
-  renderTree(filtered);
-});
-
-loadFile(0);
-</script>
-
+    main();
+  </script>
 </body>
 </html>
