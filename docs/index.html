@@ -4,423 +4,242 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BSC SMART Standards — Data Catalogue Package</title>
+
   <style>
     :root{
-      --bg:#0b0f17; --panel:#111827; --panel2:#0f172a; --text:#e5e7eb; --muted:#9ca3af;
-      --accent:#60a5fa; --border:#1f2937; --chip:#0b1220; --warn:#fbbf24;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      --bg:#0b0f17; --panel:#111827; --panel2:#0f172a; --text:#e5e7eb;
+      --muted:#9ca3af; --accent:#60a5fa; --border:#1f2937;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
     }
     *{box-sizing:border-box}
     body{margin:0; font-family:var(--sans); background:var(--bg); color:var(--text);}
-    a{color:var(--accent); text-decoration:none}
-    a:hover{text-decoration:underline}
     header{
-      padding:16px 18px; border-bottom:1px solid var(--border);
-      background:linear-gradient(180deg, rgba(17,24,39,.95), rgba(17,24,39,.65));
-      position:sticky; top:0; z-index:10;
+      padding:18px 20px;
+      border-bottom:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(17,24,39,.95), rgba(17,24,39,.75));
     }
-    header h1{margin:0; font-size:16px; font-weight:700; letter-spacing:.2px}
-    header .sub{margin-top:6px; font-size:12px; color:var(--muted); line-height:1.4}
-    .wrap{display:grid; grid-template-columns: 340px 1fr; min-height: calc(100vh - 76px);}
+    header h1{margin:0; font-size:18px}
+    header p{margin:6px 0 0; font-size:13px; color:var(--muted)}
+    .wrap{display:grid; grid-template-columns: 360px 1fr; min-height:100vh;}
     .side{
+      padding:16px;
       border-right:1px solid var(--border);
-      background:linear-gradient(180deg, rgba(17,24,39,.6), rgba(15,23,42,.6));
-      padding:14px;
+      background:rgba(17,24,39,.5);
     }
-    .main{padding:14px; overflow:auto;}
+    .main{padding:16px;}
     .card{
-      background:rgba(17,24,39,.75);
+      background:rgba(15,23,42,.65);
       border:1px solid var(--border);
       border-radius:12px;
-      padding:12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      padding:14px;
+      margin-bottom:14px;
     }
-    .stack{display:flex; flex-direction:column; gap:10px;}
-    .row{display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
-    .label{font-size:12px; color:var(--muted);}
+    .label{font-size:12px; color:var(--muted); margin-bottom:6px;}
+    .mono{font-family:var(--mono); font-size:12px;}
     .chip{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:8px 10px; border-radius:999px; border:1px solid var(--border);
-      background:rgba(11,18,32,.85); cursor:pointer; user-select:none;
-      font-size:12px;
-    }
-    .chip[aria-selected="true"]{border-color: rgba(96,165,250,.75); box-shadow: 0 0 0 2px rgba(96,165,250,.15) inset;}
-    .btn{
-      background:rgba(96,165,250,.15);
-      border:1px solid rgba(96,165,250,.35);
-      color:var(--text);
-      border-radius:10px;
-      padding:8px 10px;
+      display:inline-block;
+      padding:6px 10px;
+      margin:4px 6px 4px 0;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(11,18,32,.85);
       cursor:pointer;
       font-size:12px;
     }
-    .btn:hover{background:rgba(96,165,250,.22)}
-    input[type="search"]{
+    .chip[aria-selected="true"]{
+      border-color:var(--accent);
+      background:rgba(96,165,250,.15);
+    }
+    input{
       width:100%;
-      padding:10px 10px;
-      border-radius:10px;
+      padding:8px;
+      border-radius:8px;
       border:1px solid var(--border);
-      background:rgba(15,23,42,.75);
+      background:rgba(15,23,42,.85);
       color:var(--text);
-      outline:none;
     }
-    input[type="search"]::placeholder{color:rgba(156,163,175,.75)}
-    .kv{
-      display:grid;
-      grid-template-columns: 160px 1fr;
-      gap:8px 12px;
+    details{
+      margin-top:8px;
+      padding:6px 10px;
+      border:1px solid var(--border);
+      border-radius:8px;
+      background:rgba(11,18,32,.45);
       font-size:12px;
     }
-    .kv div:nth-child(odd){color:var(--muted)}
-    .mono{font-family:var(--mono)}
-    .warn{
-      border-left:4px solid var(--warn);
-      padding:10px 12px;
-      background:rgba(251,191,36,.08);
-      border-radius:10px;
-      border:1px solid rgba(251,191,36,.18);
-      color:rgba(229,231,235,.95);
-      font-size:12px;
-      line-height:1.45;
-    }
-    .tree{font-size:12px; line-height:1.55;}
-    details{border:1px solid var(--border); border-radius:10px; padding:8px 10px; background:rgba(15,23,42,.35)}
-    details + details{margin-top:8px}
-    summary{cursor:pointer; list-style:none; display:flex; align-items:center; gap:10px;}
-    summary::-webkit-details-marker{display:none}
-    .k{color:rgba(156,163,175,.9)}
-    .t{color:rgba(229,231,235,.95)}
+    summary{cursor:pointer}
     .badge{
-      font-size:11px; color:rgba(156,163,175,.9);
-      border:1px solid var(--border); padding:2px 8px; border-radius:999px;
-      background:rgba(11,18,32,.7);
+      font-size:11px;
+      padding:2px 6px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      color:var(--muted);
+      margin-left:8px;
     }
-    .hl{background: rgba(96,165,250,.18); border-bottom:1px solid rgba(96,165,250,.35)}
-    .footer{margin-top:10px; font-size:11px; color:var(--muted)}
-    .split{display:grid; grid-template-columns: 1fr 1fr; gap:12px;}
-    @media (max-width: 980px){ .wrap{grid-template-columns: 1fr;} .side{border-right:none; border-bottom:1px solid var(--border);} .split{grid-template-columns:1fr;} }
+    .small{font-size:12px; color:var(--muted);}
+    @media (max-width: 1000px){
+      .wrap{grid-template-columns:1fr;}
+      .side{border-right:none;border-bottom:1px solid var(--border);}
+    }
   </style>
 </head>
+
 <body>
+
 <header>
-  <h1>BSC SMART Standards — Digital Rulebook Data Catalogue Package</h1>
-  <div class="sub">
-    Static GitHub Pages viewer for JSON Schemas / data catalogues (Level 2→3 scaffolding). Drop additional JSON files into <span class="mono">/docs/data</span> and list them in <span class="mono">FILES</span> below.
-  </div>
+  <h1>BSC SMART Standards — Data Catalogue Package</h1>
+  <p>
+    Machine-readable JSON Schemas supporting the Digital Rulebook initiative.
+    This repository demonstrates progression from SMART Level 2 (structured digital artefacts)
+    towards Level 3 (machine-readable, validation-ready rule components).
+  </p>
 </header>
 
 <div class="wrap">
+
   <aside class="side">
-    <div class="stack">
-      <div class="card stack">
-        <div class="label">Artefacts</div>
-        <div id="fileChips" class="row"></div>
-        <div class="row" style="justify-content:space-between;">
-          <button class="btn" id="expandAllBtn">Expand all</button>
-          <button class="btn" id="collapseAllBtn">Collapse all</button>
-        </div>
-        <div class="label">Search (keys + values)</div>
-        <input id="searchBox" type="search" placeholder="e.g. smart_classification, $id, item_reference, semantic_type…" />
-        <div class="footer">
-          Tip: search is client-side; large files will still work, but your browser will do the heavy lifting.
-        </div>
-      </div>
 
-      <div class="warn">
-        This viewer is intentionally “no-build”: a single HTML file + static JSON hosted in-repo.
-        For anything beyond exploration (validation, schema CI, graph builds), use GitHub Actions in the repo.
-      </div>
-
-      <div class="card stack">
-        <div class="label">Current selection</div>
-        <div class="kv" id="metaKv">
-          <div>File</div><div class="mono">—</div>
-          <div>$id</div><div class="mono">—</div>
-          <div>title</div><div>—</div>
-          <div>description</div><div>—</div>
-        </div>
-        <div class="row">
-          <a id="rawLink" href="#" target="_blank" rel="noopener" class="chip">Open raw JSON</a>
-        </div>
+    <div class="card">
+      <div class="label">Purpose</div>
+      <div class="small">
+        This package provides structured JSON Schema representations of selected BSC
+        artefacts to support interoperability, validation, and future automation.
+        <br><br>
+        Scope currently includes:
+        <ul>
+          <li>CVA Annex B</li>
+          <li>BMRS</li>
+          <li>SVA Volume 2</li>
+        </ul>
+        These schemas form part of the broader transition toward a machine-readable
+        Digital Rulebook.
       </div>
     </div>
+
+    <div class="card">
+      <div class="label">Artefacts</div>
+      <div id="fileChips"></div>
+    </div>
+
+    <div class="card">
+      <div class="label">Search</div>
+      <input id="searchBox" placeholder="Search keys or values..." />
+      <div class="small" style="margin-top:6px;">
+        Client-side filtering across full JSON document.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="label">SMART Standards Context</div>
+      <div class="small">
+        <b>Level 2:</b> Structured digital documents<br>
+        <b>Level 3:</b> Machine-readable schemas + validation logic<br>
+        <b>Level 4:</b> Ontology-linked semantic reasoning (future phase)
+      </div>
+    </div>
+
   </aside>
 
   <main class="main">
-    <div class="split">
-      <div class="card">
-        <div class="label">Interactive tree</div>
-        <div id="tree" class="tree" style="margin-top:10px;"></div>
-      </div>
-      <div class="card">
-        <div class="label">Matched snippets</div>
-        <div class="footer">Shows only when search has matches (helps you jump without expanding everything).</div>
-        <div id="matches" style="margin-top:10px; font-size:12px; line-height:1.55;"></div>
-      </div>
+
+    <div class="card">
+      <div class="label">Interactive Schema Viewer</div>
+      <div id="tree"></div>
     </div>
+
   </main>
+
 </div>
 
 <script>
-  // Add any additional JSON artefacts you place in /docs/data here:
-  const FILES = [
-    { key: "CVA Annex B — Schema", path: "data/cva_annex_b_schema.json" },
-    { key: "BMRS — Schema",        path: "data/bmrs_schema.json" },
-    { key: "SVA Vol 2 — Schema",   path: "data/sva_schema.json" }
-    // Example (if you add instances later):
-    // { key: "CVA Annex B — Data", path: "data/cva_annex_b_data.json" }
-  ];
+const FILES = [
+  { key: "CVA Annex B Schema", path: "data/cva_annex_b_schema.json" },
+  { key: "BMRS Schema", path: "data/bmrs_schema.json" },
+  { key: "SVA Vol 2 Schema", path: "data/sva_schema.json" }
+];
 
-  const state = {
-    currentIndex: 0,
-    json: null,
-    search: ""
+const fileChips = document.getElementById("fileChips");
+const tree = document.getElementById("tree");
+const searchBox = document.getElementById("searchBox");
+
+let currentJSON = null;
+
+FILES.forEach((f, i) => {
+  const chip = document.createElement("div");
+  chip.className = "chip";
+  chip.textContent = f.key;
+  chip.setAttribute("aria-selected", i === 0);
+  chip.onclick = () => loadFile(i);
+  fileChips.appendChild(chip);
+});
+
+async function loadFile(i){
+  [...fileChips.children].forEach((c, idx) =>
+    c.setAttribute("aria-selected", idx === i)
+  );
+
+  const res = await fetch(FILES[i].path);
+  currentJSON = await res.json();
+  renderTree(currentJSON);
+}
+
+function renderTree(obj, parent = tree){
+  parent.innerHTML = "";
+  Object.entries(obj).forEach(([k,v])=>{
+    const details = document.createElement("details");
+    const summary = document.createElement("summary");
+    summary.innerHTML = `${k} <span class="badge">${typeof v}</span>`;
+    details.appendChild(summary);
+
+    if(typeof v === "object" && v !== null){
+      const div = document.createElement("div");
+      div.style.marginLeft = "12px";
+      renderTree(v, div);
+      details.appendChild(div);
+    } else {
+      const val = document.createElement("div");
+      val.className = "mono";
+      val.textContent = v;
+      val.style.marginLeft = "12px";
+      details.appendChild(val);
+    }
+
+    parent.appendChild(details);
+  });
+}
+
+searchBox.addEventListener("input", e=>{
+  const term = e.target.value.toLowerCase();
+  if(!currentJSON) return;
+
+  if(!term){
+    renderTree(currentJSON);
+    return;
+  }
+
+  const filtered = JSON.parse(JSON.stringify(currentJSON));
+  const filterObj = obj=>{
+    for(const key in obj){
+      if(typeof obj[key] === "object"){
+        filterObj(obj[key]);
+      }
+      if(
+        key.toLowerCase().includes(term) ||
+        String(obj[key]).toLowerCase().includes(term)
+      ){
+        return;
+      } else {
+        delete obj[key];
+      }
+    }
   };
 
-  const elFileChips = document.getElementById("fileChips");
-  const elTree = document.getElementById("tree");
-  const elMatches = document.getElementById("matches");
-  const elSearch = document.getElementById("searchBox");
-  const elRawLink = document.getElementById("rawLink");
-  const elMetaKv = document.getElementById("metaKv");
-  const expandAllBtn = document.getElementById("expandAllBtn");
-  const collapseAllBtn = document.getElementById("collapseAllBtn");
+  filterObj(filtered);
+  renderTree(filtered);
+});
 
-  function escapeHtml(s){
-    return String(s)
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;")
-      .replaceAll("'","&#039;");
-  }
-
-  function isObject(v){ return v && typeof v === "object" && !Array.isArray(v); }
-
-  function typeOf(v){
-    if (v === null) return "null";
-    if (Array.isArray(v)) return "array";
-    return typeof v;
-  }
-
-  function highlight(text, q){
-    if(!q) return escapeHtml(text);
-    const re = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "ig");
-    return escapeHtml(text).replace(re, m => `<span class="hl">${m}</span>`);
-  }
-
-  function renderValue(v, q){
-    const t = typeOf(v);
-    if (t === "string") return `<span class="t">"${highlight(v, q)}"</span>`;
-    if (t === "number" || t === "boolean") return `<span class="t">${highlight(String(v), q)}</span>`;
-    if (t === "null") return `<span class="t">null</span>`;
-    if (t === "array") return `<span class="badge">array[${v.length}]</span>`;
-    if (t === "object") return `<span class="badge">object</span>`;
-    return `<span class="t">${highlight(String(v), q)}</span>`;
-  }
-
-  function shouldShowNode(key, value, q){
-    if(!q) return true;
-    const needle = q.toLowerCase();
-    const keyHit = String(key).toLowerCase().includes(needle);
-    if (keyHit) return true;
-
-    // For primitives, match value directly.
-    const t = typeOf(value);
-    if (t === "string" || t === "number" || t === "boolean" || t === "null"){
-      return String(value).toLowerCase().includes(needle);
-    }
-
-    // For objects/arrays, do a shallow stringify check (fast-ish).
-    try{
-      const s = JSON.stringify(value);
-      return s && s.toLowerCase().includes(needle);
-    }catch(e){
-      return false;
-    }
-  }
-
-  function buildTreeNode(key, value, path, q){
-    if(!shouldShowNode(key, value, q)) return "";
-
-    const t = typeOf(value);
-    const keyHtml = `<span class="k">${highlight(key, q)}</span>`;
-
-    if (t === "object"){
-      const entries = Object.entries(value);
-      const inner = entries.map(([k,v]) => buildTreeNode(k, v, path + "." + k, q)).filter(Boolean).join("");
-      return `
-        <details open>
-          <summary>${keyHtml} <span class="badge">object</span></summary>
-          <div style="padding-left:12px; margin-top:8px;">${inner || "<span class='label'>No matching children</span>"}</div>
-        </details>`;
-    }
-
-    if (t === "array"){
-      const items = value;
-      const preview = `<span class="badge">array[${items.length}]</span>`;
-      const inner = items.slice(0, 250).map((v, i) => {
-        const childKey = "[" + i + "]";
-        if(!shouldShowNode(childKey, v, q)) return "";
-        const vt = typeOf(v);
-        if (vt === "object" || vt === "array"){
-          return buildTreeNode(childKey, v, path + "[" + i + "]", q);
-        }
-        return `
-          <div style="padding:6px 10px; border:1px solid var(--border); border-radius:10px; background:rgba(11,18,32,.35); margin-top:8px;">
-            <span class="k">${highlight(childKey, q)}</span>: ${renderValue(v, q)}
-          </div>`;
-      }).filter(Boolean).join("");
-      const truncated = items.length > 250 ? `<div class="footer">Showing first 250 items. (Avoids DOM blow-ups for very large arrays.)</div>` : "";
-      return `
-        <details>
-          <summary>${keyHtml} ${preview}</summary>
-          <div style="padding-left:12px; margin-top:8px;">${inner || "<span class='label'>No matching items</span>"}${truncated}</div>
-        </details>`;
-    }
-
-    // primitive
-    return `
-      <div style="padding:8px 10px; border:1px solid var(--border); border-radius:10px; background:rgba(11,18,32,.35); margin-top:8px;">
-        ${keyHtml}: ${renderValue(value, q)}
-      </div>`;
-  }
-
-  function collectMatches(obj, q, limit=50){
-    if(!q) return [];
-    const needle = q.toLowerCase();
-    const out = [];
-
-    function visit(node, path){
-      if(out.length >= limit) return;
-      const t = typeOf(node);
-
-      if (t === "object"){
-        for(const [k,v] of Object.entries(node)){
-          if(out.length >= limit) break;
-          const hitKey = String(k).toLowerCase().includes(needle);
-          const vt = typeOf(v);
-          if(hitKey && (vt === "string" || vt === "number" || vt === "boolean" || vt === "null")){
-            out.push({ path: path ? path + "." + k : k, snippet: `${k}: ${String(v)}` });
-          }
-          // If primitive value matches
-          if(!hitKey && (vt === "string" || vt === "number" || vt === "boolean" || vt === "null")){
-            if(String(v).toLowerCase().includes(needle)){
-              out.push({ path: path ? path + "." + k : k, snippet: `${k}: ${String(v)}` });
-            }
-          }
-          visit(v, path ? path + "." + k : k);
-        }
-        return;
-      }
-
-      if (t === "array"){
-        for(let i=0; i<node.length && i<500 && out.length<limit; i++){
-          visit(node[i], `${path}[${i}]`);
-        }
-      }
-    }
-
-    visit(obj, "");
-    return out;
-  }
-
-  function setMeta(filePath, json){
-    const id = json && json.$id ? json.$id : "—";
-    const title = json && json.title ? json.title : "—";
-    const desc = json && json.description ? json.description : "—";
-
-    elMetaKv.innerHTML = `
-      <div>File</div><div class="mono">${escapeHtml(filePath)}</div>
-      <div>$id</div><div class="mono">${escapeHtml(id)}</div>
-      <div>title</div><div>${escapeHtml(title)}</div>
-      <div>description</div><div>${escapeHtml(desc)}</div>
-    `;
-  }
-
-  function setSelectedChip(i){
-    [...elFileChips.querySelectorAll(".chip")].forEach((c, idx) => {
-      c.setAttribute("aria-selected", idx === i ? "true" : "false");
-    });
-  }
-
-  async function loadFile(i){
-    state.currentIndex = i;
-    const f = FILES[i];
-    setSelectedChip(i);
-    elTree.innerHTML = `<div class="label">Loading <span class="mono">${escapeHtml(f.path)}</span>…</div>`;
-    elMatches.innerHTML = "";
-
-    try{
-      const res = await fetch(f.path, { cache: "no-store" });
-      if(!res.ok) throw new Error(`HTTP ${res.status}`);
-      const json = await res.json();
-      state.json = json;
-
-      setMeta(f.path, json);
-      elRawLink.href = f.path;
-
-      render();
-    }catch(err){
-      elTree.innerHTML = `<div class="warn"><b>Failed to load:</b> <span class="mono">${escapeHtml(f.path)}</span><br/>${escapeHtml(err.message)}</div>`;
-    }
-  }
-
-  function render(){
-    const q = state.search.trim();
-    const json = state.json;
-    if(!json){
-      elTree.innerHTML = `<div class="label">No file loaded.</div>`;
-      return;
-    }
-
-    // Render the tree (top-level entries)
-    const entries = Object.entries(json);
-    const treeHtml = entries.map(([k,v]) => buildTreeNode(k, v, k, q)).filter(Boolean).join("");
-    elTree.innerHTML = treeHtml || `<div class="label">No matches.</div>`;
-
-    // Render match snippets
-    const matches = collectMatches(json, q, 60);
-    if(!q){
-      elMatches.innerHTML = `<div class="label">Enter a search term to see jumpable snippets.</div>`;
-    }else if(matches.length === 0){
-      elMatches.innerHTML = `<div class="label">No matches found for <span class="mono">${escapeHtml(q)}</span>.</div>`;
-    }else{
-      elMatches.innerHTML = matches.map(m => `
-        <div style="padding:8px 10px; border:1px solid var(--border); border-radius:10px; background:rgba(11,18,32,.35); margin-top:8px;">
-          <div class="mono">${highlight(m.path, q)}</div>
-          <div class="footer">${highlight(m.snippet, q)}</div>
-        </div>
-      `).join("");
-    }
-  }
-
-  function setAllDetails(open){
-    document.querySelectorAll("details").forEach(d => d.open = open);
-  }
-
-  // Build file chips
-  FILES.forEach((f, i) => {
-    const chip = document.createElement("div");
-    chip.className = "chip";
-    chip.textContent = f.key;
-    chip.setAttribute("role", "tab");
-    chip.setAttribute("aria-selected", "false");
-    chip.addEventListener("click", () => loadFile(i));
-    elFileChips.appendChild(chip);
-  });
-
-  elSearch.addEventListener("input", (e) => {
-    state.search = e.target.value || "";
-    render();
-  });
-
-  expandAllBtn.addEventListener("click", () => setAllDetails(true));
-  collapseAllBtn.addEventListener("click", () => setAllDetails(false));
-
-  // Initial load
-  loadFile(0);
+loadFile(0);
 </script>
+
 </body>
 </html>
