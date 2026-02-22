@@ -3,55 +3,102 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BMRS Catalogue Explorer</title>
-  <meta name="description" content="Interactive GitHub Pages explorer for the BMRS Data Catalogue (reporting items, calculated items, functional requirements)." />
-  <link rel="stylesheet" href="./assets/styles.css" />
+  <title>Digital Rulebook – Data Catalogue Explorers</title>
+  <link rel="stylesheet" href="./app.css" />
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">
-      <div class="logo" aria-hidden="true">BMRS</div>
-      <div class="brandText">
-        <div class="title">BMRS Catalogue Explorer</div>
-        <div class="subtitle">Faceted search + deep links over <span class="mono">bmrs_data_catalogue.json</span></div>
+  <div class="container">
+    <div class="nav">
+      <div class="brand">
+        <div class="brandMark" aria-hidden="true"></div>
+        <div>
+          <h1>Digital Rulebook · Catalogue Explorers</h1>
+          <small>Consistent, SME-oriented exploration of SVA, CVA and BMRS catalogues.</small>
+        </div>
+      </div>
+      <div class="navlinks">
+        <a class="pill active" data-nav="home" href="./index.html">Home</a>
+        <a class="pill" data-nav="cva" href="./cva.html">CVA explorer</a>
+        <a class="pill" data-nav="sva" href="./sva.html">SVA explorer</a>
+        <a class="pill" data-nav="bmrs" href="./bmrs.html">BMRS explorer</a>
       </div>
     </div>
 
-    <nav class="tabs" role="tablist" aria-label="Catalogue sections">
-      <a class="tab" href="#/overview" data-tab="overview" role="tab">Overview</a>
-      <a class="tab" href="#/reporting" data-tab="reporting" role="tab">Reporting Items</a>
-      <a class="tab" href="#/calculated" data-tab="calculated" role="tab">Calculated Items</a>
-      <a class="tab" href="#/requirements" data-tab="requirements" role="tab">Functional Requirements</a>
-      <a class="tab" href="#/about" data-tab="about" role="tab">About</a>
-      <a class="tab" href="./sva.html" data-tab="sva" role="tab" aria-label="Open SVA Explorer">SVA Explorer</a>
-    </nav>
-
-    <div class="topActions">
-      <a class="btn" href="./data/bmrs_data_catalogue.json" title="Open raw JSON">JSON</a>
-      <a class="btn secondary" href="./schemas/bmrs_schema.json" title="Open schema">Schema</a>
-      <button class="btn secondary" id="copyLinkBtn" title="Copy deep link to clipboard">Copy link</button>
+    <div class="hero">
+      <h2>Explore the catalogues</h2>
+      <p>
+        Each explorer provides: SME-friendly clustering (Identity / Measurement / Financial / Temporal / Config-Rules / Descriptive),
+        faceted filters, sortable tables, and click-through to raw JSON for traceability.
+      </p>
     </div>
-  </header>
 
-  <main class="wrap">
-    <section id="app">
+    <div class="grid">
       <div class="card">
-        <div class="cardHd">
-          <div class="cardTitle">Loading…</div>
-          <div class="badge warn" id="loadBadge">Fetching catalogue</div>
+        <h3>CVA explorer</h3>
+        <p>CVA Data Catalogue Annex B – data dictionary items with domains, valid sets, ownership and classification flags.</p>
+        <div class="meta">
+          <span class="badge info">data_items</span>
+          <span class="badge">filter + sort</span>
+          <span class="badge purple">ontology lens</span>
         </div>
-        <div class="cardBd">
-          <div class="muted">If this remains stuck on GitHub Pages, confirm that <span class="mono">/data/bmrs_data_catalogue.json</span> exists and is published.</div>
+        <div style="margin-top:14px;">
+          <a class="pill" href="./cva.html">Open CVA explorer →</a>
         </div>
       </div>
-    </section>
-  </main>
 
-  <footer class="footer">
-    <div class="muted">Static client-side explorer (no build step). Designed for GitHub Pages.</div>
-    <div class="muted">Tip: share filtered views using the URL.</div>
-  </footer>
+      <div class="card">
+        <h3>SVA explorer</h3>
+        <p>SVA Data Catalogue Volume 2 – large field inventory, clustered for navigation and semantic review.</p>
+        <div class="meta">
+          <span class="badge info">data_items</span>
+          <span class="badge">shareable filters</span>
+          <span class="badge purple">maturity flags</span>
+        </div>
+        <div style="margin-top:14px;">
+          <a class="pill" href="./sva.html">Open SVA explorer →</a>
+        </div>
+      </div>
 
-  <script src="./assets/app.js"></script>
+      <div class="card">
+        <h3>BMRS explorer</h3>
+        <p>BMRS Data Catalogue – unified view over reporting items, calculated items, and functional/validation rules.</p>
+        <div class="meta">
+          <span class="badge info">reporting</span>
+          <span class="badge info">calculated</span>
+          <span class="badge info">rules</span>
+        </div>
+        <div style="margin-top:14px;">
+          <a class="pill" href="./bmrs.html">Open BMRS explorer →</a>
+        </div>
+      </div>
+
+      <div class="panel" style="grid-column: span 12;">
+        <h3>Expected repo structure</h3>
+        <div class="tableWrap" style="margin-top:10px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Path</th>
+                <th>Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="mono">/index.html</td><td>Landing page</td></tr>
+              <tr><td class="mono">/app.css</td><td>Shared styling</td></tr>
+              <tr><td class="mono">/app.js</td><td>Shared explorer logic</td></tr>
+              <tr><td class="mono">/cva.html</td><td>CVA explorer page</td></tr>
+              <tr><td class="mono">/sva.html</td><td>SVA explorer page</td></tr>
+              <tr><td class="mono">/bmrs.html</td><td>BMRS explorer page</td></tr>
+              <tr><td class="mono">/data/*.json</td><td>Catalogue JSON files</td></tr>
+              <tr><td class="mono">/schemas/*.json</td><td>(Optional) schema files (not required by the UI yet)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="footer">
+          The explorers also try a fallback path (e.g. <span class="mono">./sva_data_catalogue.json</span>) if you keep JSON in repo root.
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
