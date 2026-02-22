@@ -1,90 +1,143 @@
-# BSC SMART Standards — Digital Rulebook Data Catalogue Package
+# BSC SMART Data Catalogue Explorers
 
-This repository contains **machine-readable JSON data catalogues** and their **JSON Schemas** for three BSC catalogue families:
+An experimental, machine-readable visualisation layer for the BSC data catalogues:
 
-- **CVA** — Central Volume Allocation (Annex B Data Dictionary)
-- **BMRS** — Balancing Mechanism Reporting Service (reporting requirements + derived items)
-- **SVA** — Supplier Volume Allocation (Volume 2 Data Items)
+- Central Volume Allocation (CVA)
+- Supplier Volume Allocation (SVA)
+- Balancing Mechanism Reporting Service (BMRS)
 
-The package is positioned at **SMART utility model Level 2 (with Level 3 signals)**: explicit structure, metadata, and initial semantic classifications to support downstream validation and enrichment.
+This repository provides interactive explorers for structured JSON representations of these catalogues.
 
-## Quick start
+The objective is to explore how traditional BSC artefacts can evolve into machine-readable, queryable and ontology-aligned resources consistent with SMART standards and digital rulebook principles.
 
-- GitHub Pages landing page: `index.html` (repo root)
-- Raw artefacts (open directly):
-  - `cva_annex_b_data.json`
-  - `bmrs_data_catalogue.json`
-  - `sva_data_catalogue.json`
-- Schemas:
-  - `cva_annex_b_schema.json`
-  - `bmrs_schema.json`
-  - `sva_schema.json`
+---
 
-## What’s included
+## Purpose
 
-### 1) JSON Schemas
+The Balancing and Settlement Code (BSC) data catalogues are traditionally distributed as static documents and spreadsheets.
 
-These define the canonical structure and required metadata for each catalogue.
+This repository demonstrates:
 
-| File | Purpose |
-|------|---------|
-| `cva_annex_b_schema.json` | CVA Annex B data items + metadata + acronyms |
-| `bmrs_schema.json` | BMRS reporting items + calculated items + functional rules + metadata |
-| `sva_schema.json` | SVA Vol 2 data items + metadata + flow mapping signals |
+- Structured JSON representation of catalogue artefacts  
+- Schema-aligned structural contracts  
+- Semantic classification clustering  
+- Ontology candidate identification  
+- Interactive exploration via GitHub Pages  
 
-### 2) JSON Data catalogues (instances)
+This is a technical experiment in digital rulebook transformation.
 
-Each catalogue file includes:
-- `metadata` (title, reference, version, effective date, status, SMART level)
-- `statistics` (coverage counts)
-- `acronyms`
-- an items array (`data_items` / reporting structures depending on catalogue)
+---
 
-| File | Scope (headline) |
-|------|-------------------|
-| `cva_annex_b_data.json` | **497** CVA data items (NETA IDD enrichment + semantic classification flags) |
-| `bmrs_data_catalogue.json` | **93** reporting items + **26** calculated items + **8** functional rules |
-| `sva_data_catalogue.json` | **420** SVA data items + data-flow usage counts + cross references |
+## Explorers
 
-## Why this exists
+### CVA Explorer
 
-The digital rulebook needs a **data foundation layer** before rules can be decomposed and made executable:
+Explores Annex B (Data Dictionary), including:
 
-- the catalogues define **what data exists**
-- the rulebook defines **what happens to that data** (obligations, conditions, calculations, validations)
+- Domain types  
+- Logical formats  
+- Semantic classification  
+- Ontology candidate flagging  
+- Valid sets  
 
-This repo therefore acts as a seed input for:
-- docs-as-code / CI validation pipelines
-- structured clause decomposition pilots (e.g. BSC Section T)
-- future ontology alignment (SMART Level 4 readiness)
+---
 
-## Using the package
+### SVA Explorer
 
-### Validation
-Use any JSON Schema validator (e.g. AJV) against the relevant schema:
+Explores Volume 2 (Data Items), including:
 
-- validate `cva_annex_b_data.json` with `cva_annex_b_schema.json`
-- validate `bmrs_data_catalogue.json` with `bmrs_schema.json`
-- validate `sva_data_catalogue.json` with `sva_schema.json`
+- Data flow count  
+- NETA IDD cross-references  
+- Settlement semantic clustering  
+- Computability flags  
 
-### Consumption patterns
-Typical downstream consumers will:
-- read `metadata` for governance/versioning
-- use `statistics` to confirm completeness and coverage
-- ingest item arrays into a model store (graph, relational, document DB)
-- add stronger Level 3 semantics (clause-level references, computability, relationships, endpoint mappings)
+---
 
-## Publishing (GitHub Pages)
+### BMRS Explorer
 
-This repo ships a single interactive landing page (`index.html`) that:
-- loads the JSON catalogues at runtime
-- displays document metadata and summary statistics
-- links to raw JSON and schema files
+Explores:
 
-Recommended Pages settings:
-- Settings → Pages → “Deploy from a branch”
-- Branch: `main` (or `master`)
-- Folder: `/ (root)`
+- Reporting items (Tables 1–6)  
+- Calculated data items  
+- Functional validation rules  
 
-## Licence / attribution
-Unless otherwise stated, the catalogue content is derived from BSC artefacts and should be treated as **Elexon / BSC** sourced material with appropriate internal handling and attribution.
+---
+
+## Design Principles
+
+This project follows a three-layer architecture:
+
+### 1. Data Layer  
+Canonical JSON catalogue representations.
+
+### 2. Schema Layer  
+JSON Schema definitions describing structural contracts.
+
+### 3. Presentation Layer  
+A shared explorer UI built in vanilla JavaScript.
+
+No frameworks.  
+No build tooling.  
+Fully static and GitHub Pages compatible.
+
+---
+
+## Folder Structure
+
+```
+bsc-smart-data-explorers/
+│
+├── index.html
+├── cva.html
+├── sva.html
+├── bmrs.html
+│
+├── app.js
+├── app.css
+│
+├── data/
+│   ├── cva_annex_b_data.json
+│   ├── sva_data_catalogue.json
+│   └── bmrs_data_catalogue.json
+│
+├── schemas/
+│   ├── cva_annex_b_schema.json
+│   ├── sva_schema.json
+│   └── bmrs_schema.json
+│
+└── README.md
+```
+
+---
+
+## Running Locally
+
+Open `index.html` directly in a browser.
+
+Or deploy via GitHub Pages:
+
+Settings → Pages → Deploy from `main` branch.
+
+---
+
+## Future Directions
+
+- RDF / Turtle export layer  
+- SHACL validation overlay  
+- Ontology graph visualisation  
+- Settlement lifecycle clustering  
+- Cross-catalogue semantic alignment  
+
+---
+
+## Disclaimer
+
+This repository is an independent experimental project.
+
+It is not an official Elexon product, service or publication.
+
+The data representations and visualisations provided here are exploratory and may not reflect the latest official BSC documentation.
+
+Users should always refer to official Elexon publications for authoritative information.
+
+---
