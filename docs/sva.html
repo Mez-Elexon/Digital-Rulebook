@@ -3,484 +3,170 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SVA Data Items Explorer</title>
-  <meta name="description" content="Interactive explorer for SVA Data Catalogue Volume 2 (data items). Clustering by semantic type, with faceted search." />
-  <link rel="stylesheet" href="./assets/styles.css" />
-  <style>
-    /* Fallback styling if assets/styles.css isn't present */
-    :root { color-scheme: light dark; }
-    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
-    a { color: inherit; }
-    .topbar { position: sticky; top: 0; z-index: 5; backdrop-filter: blur(8px); border-bottom: 1px solid rgba(127,127,127,.25); padding: .75rem 1rem; display:flex; gap:1rem; align-items:center; justify-content:space-between; }
-    .brand { display:flex; gap:.75rem; align-items:center; }
-    .logo { width:48px; height:32px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:700; letter-spacing:.04em; border:1px solid rgba(127,127,127,.35); }
-    .brandText .title { font-weight:700; }
-    .brandText .subtitle { opacity:.75; font-size:.9rem; }
-    .tabs { display:flex; gap:.25rem; flex-wrap:wrap; }
-    .tab { padding:.4rem .6rem; border-radius:999px; text-decoration:none; border:1px solid rgba(127,127,127,.25); }
-    .tab[aria-current="page"], .tab.active { background: rgba(127,127,127,.12); }
-    .topActions { display:flex; gap:.5rem; align-items:center; flex-wrap:wrap;}
-    .btn { padding:.45rem .7rem; border-radius:10px; border:1px solid rgba(127,127,127,.25); background:transparent; cursor:pointer; text-decoration:none; }
-    .btn.secondary { opacity:.85; }
-    .wrap { max-width: 1180px; margin: 0 auto; padding: 1rem; }
-    .grid { display:grid; grid-template-columns: 1.2fr .8fr; gap: 1rem; align-items:start; }
-    @media (max-width: 980px){ .grid{ grid-template-columns: 1fr; } }
-    .card { border:1px solid rgba(127,127,127,.25); border-radius:16px; overflow:hidden; background: rgba(127,127,127,.04); }
-    .cardHd { padding: .9rem 1rem; border-bottom:1px solid rgba(127,127,127,.2); display:flex; justify-content:space-between; gap:1rem; align-items:flex-start; }
-    .cardTitle { font-weight:700; }
-    .cardBd { padding: 1rem; }
-    .muted { opacity:.75; }
-    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-    .row { display:flex; gap:.75rem; flex-wrap:wrap; align-items:center; }
-    label { font-size:.9rem; opacity:.85; }
-    input[type="search"], select, input[type="number"] { padding:.5rem .6rem; border-radius:10px; border:1px solid rgba(127,127,127,.25); background:transparent; min-width: 220px; }
-    input[type="number"]{ min-width: 120px; }
-    .badges { display:flex; gap:.35rem; flex-wrap:wrap; justify-content:flex-end; }
-    .badge { font-size:.75rem; padding:.15rem .45rem; border-radius:999px; border:1px solid rgba(127,127,127,.25); opacity:.9; white-space:nowrap; }
-    .badge.ok { border-color: rgba(60,180,75,.55); }
-    .badge.warn { border-color: rgba(255,165,0,.55); }
-    .badge.info { border-color: rgba(0,120,255,.55); }
-    .badge.dim { opacity:.65; }
-    .list { display:flex; flex-direction:column; gap:.6rem; }
-    details { border:1px solid rgba(127,127,127,.18); border-radius:14px; padding:.65rem .75rem; background: rgba(127,127,127,.03); }
-    summary { cursor:pointer; list-style:none; }
-    summary::-webkit-details-marker { display:none; }
-    .itemHd { display:flex; justify-content:space-between; gap:1rem; align-items:flex-start; }
-    .itemName { font-weight:650; }
-    .itemDesc { margin:.35rem 0 0; }
-    .kv { display:grid; grid-template-columns: 180px 1fr; gap:.35rem .75rem; margin-top:.7rem; }
-    .kv div { padding:.1rem 0; }
-    .footer { padding: 1.2rem 1rem; border-top:1px solid rgba(127,127,127,.25); display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
-    .pillbar { display:flex; gap:.4rem; flex-wrap:wrap; }
-    .pill { padding:.35rem .55rem; border-radius:999px; border:1px solid rgba(127,127,127,.25); cursor:pointer; background:transparent; }
-    .pill.active { background: rgba(127,127,127,.12); }
-  </style>
+  <title>SVA explorer – Data Catalogue Explorer</title>
+  <link rel="stylesheet" href="./app.css" />
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">
-      <div class="logo" aria-hidden="true">SVA</div>
-      <div class="brandText">
-        <div class="title">SVA Data Items Explorer</div>
-        <div class="subtitle">Clustering + faceted search over <span class="mono">sva_data_catalogue.json</span></div>
+  <div class="container">
+    <div class="nav">
+      <div class="brand">
+        <div class="brandMark" aria-hidden="true"></div>
+        <div>
+          <h1>Digital Rulebook · Catalogue Explorers</h1>
+          <small id="metaDoc"></small>
+        </div>
+      </div>
+      <div class="navlinks">
+        <a class="pill" data-nav="home" href="./index.html">Home</a>
+        <a class="pill" data-nav="cva" href="./cva.html">CVA explorer</a>
+        <a class="pill" data-nav="sva" href="./sva.html">SVA explorer</a>
+        <a class="pill" data-nav="bmrs" href="./bmrs.html">BMRS explorer</a>
       </div>
     </div>
 
-    <nav class="tabs" aria-label="Site navigation">
-      <a class="tab" href="./index.html">BMRS Explorer</a>
-      <a class="tab active" href="./sva.html" aria-current="page">SVA Explorer</a>
-    </nav>
-
-    <div class="topActions">
-      <a class="btn" href="./data/sva_data_catalogue.json" title="Open raw JSON">JSON</a>
-      <a class="btn secondary" href="./schemas/sva_schema.json" title="Open schema">Schema</a>
-      <button class="btn secondary" id="copyLinkBtn" title="Copy deep link to clipboard">Copy link</button>
+    <div class="hero">
+      <h2 id="pageTitle">SVA explorer</h2>
+      <p id="pageSubtitle">Clustered view of the SVA Data Catalogue (Volume 2). Use filters to slice by semantic type, domain, computability and ontology candidacy.</p>
     </div>
-  </header>
 
-  <main class="wrap">
-    <section class="grid">
-      <div class="card">
-        <div class="cardHd">
-          <div>
-            <div class="cardTitle" id="cardTitle">Browse & filter</div>
-            <div class="muted" id="subtitle">Loading catalogue…</div>
+    <div class="grid">
+      <div class="panel" style="grid-column: span 12;">
+        <div class="controls">
+          <div class="control wide">
+            <label for="q">Search</label>
+            <input id="q" placeholder="Search by reference, name/description, notes, defined_in, section..." />
           </div>
-          <div class="badges">
-            <span class="badge warn" id="loadBadge">Fetching</span>
+          <div class="control">
+            <label for="cluster">Cluster</label>
+            <select id="cluster"></select>
           </div>
-        </div>
-        <div class="cardBd">
-          <div class="row" style="margin-bottom:.75rem;">
-            <label>
-              Search
-              <div><input id="q" type="search" placeholder="e.g. MPAN, Metered Volume, Settlement Run, Credit…" /></div>
-            </label>
-
-            <label>
-              Cluster
-              <div>
-                <select id="cluster">
-                  <option value="all">All clusters</option>
-                </select>
-              </div>
-            </label>
-
-            <label>
-              Domain
-              <div>
-                <select id="domain">
-                  <option value="all">All domains</option>
-                </select>
-              </div>
-            </label>
-
-            <label>
-              Min data-flow count
-              <div><input id="minFlow" type="number" min="0" step="1" value="0" /></div>
-            </label>
-
-            <label class="row" style="gap:.5rem;">
-              <input id="onlyOntology" type="checkbox" />
-              <span>Ontology candidates only</span>
-            </label>
-
-            <label class="row" style="gap:.5rem;">
-              <input id="onlyComputable" type="checkbox" />
-              <span>Computable only</span>
-            </label>
-
-            <label class="row" style="gap:.5rem;">
-              <input id="hasValidSet" type="checkbox" />
-              <span>Has valid set</span>
-            </label>
+          <div class="control">
+            <label for="domain">Domain</label>
+            <select id="domain"></select>
           </div>
-
-          <div class="pillbar" id="pillbar" aria-label="Quick clusters" style="margin-bottom:.75rem;"></div>
-
-          <div class="muted" id="resultsMeta"></div>
-          <div class="list" id="results" style="margin-top:.75rem;"></div>
-        </div>
-      </div>
-
-      <aside class="card">
-        <div class="cardHd">
-          <div>
-            <div class="cardTitle">Catalogue summary</div>
-            <div class="muted">Key stats + interpretation aids</div>
+          <div class="control">
+            <label for="semantic">Semantic type</label>
+            <select id="semantic"></select>
           </div>
-          <div class="badges">
-            <span class="badge info" id="versionBadge">—</span>
+          <div class="control">
+            <label for="minFlow">Min flow count</label>
+            <select id="minFlow">
+              <option value="0">0+</option>
+              <option value="1">1+</option>
+              <option value="2">2+</option>
+              <option value="5">5+</option>
+              <option value="10">10+</option>
+              <option value="25">25+</option>
+              <option value="50">50+</option>
+            </select>
           </div>
-        </div>
-        <div class="cardBd">
-          <div class="kv" id="metaKv"></div>
-          <hr style="border:none;border-top:1px solid rgba(127,127,127,.2); margin: .9rem 0;" />
-          <div class="muted" style="margin-bottom:.5rem;">Clustering model</div>
-          <div class="muted">
-            Primary grouping is <span class="mono">smart_classification.semantic_type</span>, mapped into business-facing clusters
-            (Identity, Measurement, Financial, Temporal, Configuration, Descriptive).
-          </div>
-        </div>
-      </aside>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="muted">Static client-side explorer (no build step). Designed for GitHub Pages.</div>
-    <div class="muted">Tip: share filtered views using the URL hash.</div>
-  </footer>
-
-  <script>
-    const DATA_URL = "./data/sva_data_catalogue.json";
-
-    const CLUSTER_MAP = [
-      { key: "identity",     label: "Identity & Registration",        types: ["identifier"] },
-      { key: "measurement",  label: "Metering & Energy Quantities",   types: ["measurement", "metering_technical"] },
-      { key: "financial",    label: "Financial & Settlement",         types: ["financial"] },
-      { key: "temporal",     label: "Time & Runs",                    types: ["temporal"] },
-      { key: "config",       label: "Configuration & Flags",          types: ["configuration"] },
-      { key: "descriptive",  label: "Descriptive / Metadata",         types: ["descriptive"] },
-      { key: "unclassified", label: "Unclassified / Other",           types: ["unclassified", null, undefined, ""] }
-    ];
-
-    const $ = (id) => document.getElementById(id);
-
-    const state = { data: null, items: [], domains: [], clusters: [] };
-
-    function norm(s) { return (s ?? "").toString().toLowerCase(); }
-
-    function semanticType(item){
-      return item?.smart_classification?.semantic_type ?? null;
-    }
-
-    function clusterFor(item){
-      const t = semanticType(item);
-      for (const c of CLUSTER_MAP){
-        if (c.types.some(x => x === t)) return c;
-      }
-      return { key: "unclassified", label: "Unclassified / Other", types: [] };
-    }
-
-    function escapeHtml(str){
-      return (str ?? "").toString()
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-    }
-
-    function setActivePill(key){
-      for (const b of document.querySelectorAll(".pill")){
-        b.classList.toggle("active", b.dataset.key === key);
-      }
-    }
-
-    function syncFromHash(){
-      const params = new URLSearchParams(location.hash.replace(/^#\/?/, ""));
-      $("q").value = params.get("q") ?? "";
-      $("cluster").value = params.get("cluster") ?? "all";
-      $("domain").value = params.get("domain") ?? "all";
-      $("minFlow").value = params.get("minFlow") ?? "0";
-      $("onlyOntology").checked = params.get("onlyOntology") === "1";
-      $("onlyComputable").checked = params.get("onlyComputable") === "1";
-      $("hasValidSet").checked = params.get("hasValidSet") === "1";
-
-      setActivePill($("cluster").value);
-      render();
-    }
-
-    function syncToHash(){
-      const params = new URLSearchParams();
-      const q = $("q").value.trim();
-      const cluster = $("cluster").value;
-      const domain = $("domain").value;
-      const minFlow = $("minFlow").value;
-      const onlyOntology = $("onlyOntology").checked;
-      const onlyComputable = $("onlyComputable").checked;
-      const hasValidSet = $("hasValidSet").checked;
-
-      if (q) params.set("q", q);
-      if (cluster !== "all") params.set("cluster", cluster);
-      if (domain !== "all") params.set("domain", domain);
-      if (minFlow && minFlow !== "0") params.set("minFlow", minFlow);
-      if (onlyOntology) params.set("onlyOntology","1");
-      if (onlyComputable) params.set("onlyComputable","1");
-      if (hasValidSet) params.set("hasValidSet","1");
-
-      const next = "#/" + params.toString();
-      if (location.hash !== next) history.replaceState(null, "", next);
-    }
-
-    function buildSelectors(){
-      const clusterSel = $("cluster");
-      clusterSel.innerHTML = '<option value="all">All clusters</option>';
-      for (const c of state.clusters){
-        const opt = document.createElement("option");
-        opt.value = c.key;
-        opt.textContent = c.label;
-        clusterSel.appendChild(opt);
-      }
-
-      const domSel = $("domain");
-      domSel.innerHTML = '<option value="all">All domains</option>';
-      for (const d of state.domains){
-        const opt = document.createElement("option");
-        opt.value = d;
-        opt.textContent = d;
-        domSel.appendChild(opt);
-      }
-
-      const pillbar = $("pillbar");
-      pillbar.innerHTML = "";
-      const makePill = (key, label) => {
-        const b = document.createElement("button");
-        b.className = "pill";
-        b.type = "button";
-        b.dataset.key = key;
-        b.textContent = label;
-        b.addEventListener("click", () => {
-          $("cluster").value = key;
-          setActivePill(key);
-          syncToHash();
-          render();
-        });
-        pillbar.appendChild(b);
-      };
-      makePill("all", "All");
-      for (const c of state.clusters) makePill(c.key, c.label);
-    }
-
-    function render(){
-      if (!state.data) return;
-
-      syncToHash();
-
-      const q = norm($("q").value.trim());
-      const clusterKey = $("cluster").value;
-      const domain = $("domain").value;
-      const minFlow = Number($("minFlow").value || "0");
-      const onlyOntology = $("onlyOntology").checked;
-      const onlyComputable = $("onlyComputable").checked;
-      const hasValidSet = $("hasValidSet").checked;
-
-      let items = state.items;
-
-      if (clusterKey !== "all"){
-        items = items.filter(it => clusterFor(it).key === clusterKey);
-      }
-      if (domain !== "all"){
-        items = items.filter(it => (it.domain ?? "unknown") === domain);
-      }
-      if (minFlow > 0){
-        items = items.filter(it => Number(it.data_flow_count ?? 0) >= minFlow);
-      }
-      if (onlyOntology){
-        items = items.filter(it => it?.smart_classification?.ontology_candidate === true);
-      }
-      if (onlyComputable){
-        items = items.filter(it => it?.smart_classification?.is_computable === true);
-      }
-      if (hasValidSet){
-        items = items.filter(it => !!(it.valid_set && it.valid_set.toString().trim()));
-      }
-      if (q){
-        items = items.filter(it => {
-          const blob = [
-            it.item_name, it.description, it.valid_set,
-            it.logical_format, it.domain, it.units, it.neta_idd_reference,
-            (it.smart_classification?.bsc_section_references || []).join(" "),
-            it.notes
-          ].join(" | ");
-          return norm(blob).includes(q);
-        });
-      }
-
-      items = items.slice().sort((a,b) => {
-        const da = Number(a.data_flow_count ?? 0);
-        const db = Number(b.data_flow_count ?? 0);
-        if (db !== da) return db - da;
-        return (a.item_name || "").localeCompare(b.item_name || "");
-      });
-
-      $("resultsMeta").textContent = `${items.length.toLocaleString()} items shown (sorted by data-flow count).`;
-      const root = $("results");
-      root.innerHTML = "";
-
-      const frag = document.createDocumentFragment();
-      for (const it of items){
-        const c = clusterFor(it);
-        const dom = it.domain ?? "unknown";
-        const flow = Number(it.data_flow_count ?? 0);
-        const sem = semanticType(it) ?? "—";
-        const desc = it.description || "No description available.";
-
-        const ont = it?.smart_classification?.ontology_candidate === true;
-        const comp = it?.smart_classification?.is_computable === true;
-        const hasVS = !!(it.valid_set && it.valid_set.toString().trim());
-
-        const details = document.createElement("details");
-        details.innerHTML = `
-          <summary>
-            <div class="itemHd">
-              <div>
-                <div class="itemName">${escapeHtml(it.item_name || "Unnamed item")}</div>
-                <div class="itemDesc muted">${escapeHtml(desc)}</div>
-              </div>
-              <div class="badges">
-                <span class="badge info">${escapeHtml(c.label)}</span>
-                <span class="badge">${escapeHtml(dom)}</span>
-                <span class="badge ${flow >= 10 ? "ok" : "dim"}">flow ${flow}</span>
-                <span class="badge dim">type ${escapeHtml(sem)}</span>
-                ${ont ? '<span class="badge ok">ontology</span>' : ''}
-                ${comp ? '<span class="badge ok">computable</span>' : ''}
-                ${hasVS ? '<span class="badge warn">valid set</span>' : ''}
-              </div>
+          <div class="control">
+            <label>&nbsp;</label>
+            <div class="row">
+              <label class="pill" style="cursor:pointer; user-select:none;">
+                <input id="onlyComputable" type="checkbox" style="width:auto; margin:0;"> computable
+              </label>
+              <label class="pill" style="cursor:pointer; user-select:none;">
+                <input id="onlyOntology" type="checkbox" style="width:auto; margin:0;"> ontology candidate
+              </label>
+              <label class="pill" style="cursor:pointer; user-select:none;">
+                <input id="onlyValidSet" type="checkbox" style="width:auto; margin:0;"> has valid set
+              </label>
             </div>
-          </summary>
-
-          <div class="kv">
-            <div class="muted">Item name</div><div class="mono">${escapeHtml(it.item_name || "")}</div>
-            <div class="muted">Description</div><div>${escapeHtml(desc)}</div>
-            <div class="muted">Cluster</div><div>${escapeHtml(c.label)}</div>
-            <div class="muted">Semantic type</div><div class="mono">${escapeHtml(sem)}</div>
-            <div class="muted">Domain</div><div class="mono">${escapeHtml(dom)}</div>
-            <div class="muted">Logical format</div><div class="mono">${escapeHtml(it.logical_format || "—")}</div>
-            <div class="muted">Units</div><div class="mono">${escapeHtml(it.units || "—")}</div>
-            <div class="muted">Valid set</div><div>${escapeHtml(it.valid_set || "—")}</div>
-            <div class="muted">NETA IDD ref</div><div class="mono">${escapeHtml(it.neta_idd_reference || "—")}</div>
-            <div class="muted">BSC refs</div><div class="mono">${escapeHtml((it.smart_classification?.bsc_section_references || []).join(", ") || "—")}</div>
-            <div class="muted">Ontology candidate</div><div class="mono">${ont ? "true" : "false"}</div>
-            <div class="muted">Computable</div><div class="mono">${comp ? "true" : "false"}</div>
-            <div class="muted">Data-flow count</div><div class="mono">${flow}</div>
-            <div class="muted">Notes</div><div>${escapeHtml(it.notes || "—")}</div>
           </div>
-        `;
-        frag.appendChild(details);
-      }
-      root.appendChild(frag);
-    }
+          <div class="control">
+            <label>&nbsp;</label>
+            <div class="row" style="justify-content:space-between; align-items:center;">
+              <span class="badge info" id="resultCount">0 items</span>
+              <button id="reset" class="pill" style="cursor:pointer;">Reset</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    async function load(){
-      $("loadBadge").textContent = "Fetching";
-      try{
-        const res = await fetch(DATA_URL, { cache: "no-store" });
-        if (!res.ok) throw new Error(`HTTP ${res.status} loading ${DATA_URL}`);
-        const data = await res.json();
-        state.data = data;
+      <div class="panel" style="grid-column: span 12;">
+        <div class="kpis">
+          <div class="kpi" id="kpiTotal"><div class="num mono">0</div><div class="lbl">items (filtered)</div></div>
+          <div class="kpi" id="kpiComputable"><div class="num mono">0</div><div class="lbl">computable</div></div>
+          <div class="kpi" id="kpiOntology"><div class="num mono">0</div><div class="lbl">ontology candidates</div></div>
+          <div class="kpi" id="kpiValidSet"><div class="num mono">0</div><div class="lbl">with valid sets</div></div>
+        </div>
+      </div>
 
-        const items = data.data_items || [];
-        state.items = items;
+      <div class="panel" style="grid-column: span 12;">
+        <div class="row" style="justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <h3 style="margin:0;">Catalogue items</h3>
+          <div class="small">Click a row for full details</div>
+        </div>
+        <div class="tableWrap">
+          <table id="tbl">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
-        const domSet = new Set();
-        for (const it of items) domSet.add(it.domain ?? "unknown");
-        state.domains = Array.from(domSet).sort((a,b)=>a.localeCompare(b));
+    <div class="footer">
+      Tip: filters are encoded in the URL hash so you can share a pre-filtered view.
+    </div>
+  </div>
 
-        const cMap = new Map();
-        for (const it of items){
-          const c = clusterFor(it);
-          cMap.set(c.key, c.label);
-        }
-        state.clusters = CLUSTER_MAP
-          .filter(c => cMap.has(c.key) || c.key === "unclassified")
-          .map(c => ({ key: c.key, label: c.label }));
+  <div class="modalBack" id="modalBack">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modalHead">
+        <div>
+          <h3 id="modalTitle">Item</h3>
+          <div id="modalMeta" class="small"></div>
+        </div>
+        <button id="modalClose" aria-label="Close">Close</button>
+      </div>
+      <div style="margin-top:10px;">
+        <div class="small" style="margin-bottom:6px;">Raw JSON (source record)</div>
+        <pre id="modalJson"></pre>
+      </div>
+    </div>
+  </div>
 
-        buildSelectors();
+  <script type="module">
+    import { initExplorer } from './app.js';
+    const CONFIG = ({
+  id: 'sva',
+  title: 'SVA explorer',
+  subtitle: 'Clustered view of SVA Data Catalogue (Volume 2) items: identity, measurement, financial, temporal and control fields.',
+  metaDocLine: '',
+  dataPaths: ['./data/sva_data_catalogue.json','./sva_data_catalogue.json'],
+  columns: [
+    {key:'__id', label:'Item ref', mono:true},
+    {key:'__name', label:'Item name'},
+    {key:'defined_in', label:'Defined in'},
+    {key:'__cluster', label:'Cluster'},
+    {key:'__semantic', label:'Semantic', mono:true},
+    {key:'__domain', label:'Domain', mono:true},
+    {key:'units', label:'Units', mono:true},
+    {key:'__flow', label:'Flow', mono:true},
+    {key:'__computable', label:'Computable', mono:true},
+    {key:'__ontology', label:'Ont.', mono:true},
+    {key:'__hasValidSet', label:'Valid set', mono:true},
+  ],
+  extractRecords: (raw) => raw?.data_items ?? [],
+  describeRecord: (r) => {
+    const bits = [];
+    if (r.__id) bits.push(`<span class="badge info">${r.__id}</span>`);
+    if (r.defined_in) bits.push(`<span class="badge">${r.defined_in}</span>`);
+    if (r.__domain) bits.push(`<span class="badge purple">${r.__domain}</span>`);
+    if (r.units) bits.push(`<span class="badge">${r.units}</span>`);
+    if (r.valid_set_name) bits.push(`<span class="badge warn">valid set: ${r.valid_set_name}</span>`);
+    return bits.join(' ');
+  }
+});
 
-        const md = data.metadata || {};
-        $("versionBadge").textContent = `v${md.version || "—"} • ${md.status || "—"}`;
-
-        const kv = $("metaKv");
-        const stat = md.statistics || {};
-        kv.innerHTML = `
-          <div class="muted">Document</div><div>${escapeHtml(md.document_title || "—")}</div>
-          <div class="muted">Reference</div><div class="mono">${escapeHtml(md.document_reference || "—")}</div>
-          <div class="muted">Effective from</div><div class="mono">${escapeHtml(md.effective_from_date || "—")}</div>
-          <div class="muted">Total items</div><div class="mono">${(stat.total_data_items ?? items.length).toLocaleString()}</div>
-          <div class="muted">Ontology candidates</div><div class="mono">${(stat.ontology_candidates ?? "—").toString()}</div>
-          <div class="muted">Computable items</div><div class="mono">${(stat.computable_items ?? "—").toString()}</div>
-          <div class="muted">NETA IDD crossrefs</div><div class="mono">${(stat.items_with_neta_idd_crossref ?? "—").toString()}</div>
-          <div class="muted">Has data-flow mapping</div><div class="mono">${(stat.items_with_data_flow_mapping ?? "—").toString()}</div>
-        `;
-
-        $("subtitle").textContent = `${items.length.toLocaleString()} data items loaded.`;
-
-        $("loadBadge").className = "badge ok";
-        $("loadBadge").textContent = "Loaded";
-
-        syncFromHash();
-      } catch (e){
-        $("loadBadge").className = "badge warn";
-        $("loadBadge").textContent = "Failed";
-        $("subtitle").textContent = "Could not load catalogue JSON.";
-        $("resultsMeta").textContent = String(e);
-      }
-    }
-
-    $("q").addEventListener("input", render);
-    $("cluster").addEventListener("change", () => { setActivePill($("cluster").value); render(); });
-    $("domain").addEventListener("change", render);
-    $("minFlow").addEventListener("input", render);
-    $("onlyOntology").addEventListener("change", render);
-    $("onlyComputable").addEventListener("change", render);
-    $("hasValidSet").addEventListener("change", render);
-
-    window.addEventListener("hashchange", syncFromHash);
-
-    $("copyLinkBtn").addEventListener("click", async () => {
-      try{
-        await navigator.clipboard.writeText(location.href);
-        const btn = $("copyLinkBtn");
-        const old = btn.textContent;
-        btn.textContent = "Copied";
-        setTimeout(()=>btn.textContent=old, 900);
-      } catch {
-        alert("Could not copy. You can copy the URL from the address bar.");
-      }
+    initExplorer(CONFIG).catch(err => {
+      console.error(err);
+      document.querySelector('#pageSubtitle').textContent =
+        'Failed to load the catalogue JSON. Check the file paths in your repo and refresh. ' +
+        'Details: ' + (err?.message || err);
     });
-
-    load();
   </script>
 </body>
 </html>
