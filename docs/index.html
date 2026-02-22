@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BMRS Catalogue Explorer</title>
+  <meta name="description" content="Interactive GitHub Pages explorer for the BMRS Data Catalogue (reporting items, calculated items, functional requirements)." />
+  <link rel="stylesheet" href="./assets/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">BMRS</div>
+      <div class="brandText">
+        <div class="title">BMRS Catalogue Explorer</div>
+        <div class="subtitle">Faceted search + deep links over <span class="mono">bmrs_data_catalogue.json</span></div>
+      </div>
+    </div>
+
+    <nav class="tabs" role="tablist" aria-label="Catalogue sections">
+      <a class="tab" href="#/overview" data-tab="overview" role="tab">Overview</a>
+      <a class="tab" href="#/reporting" data-tab="reporting" role="tab">Reporting Items</a>
+      <a class="tab" href="#/calculated" data-tab="calculated" role="tab">Calculated Items</a>
+      <a class="tab" href="#/requirements" data-tab="requirements" role="tab">Functional Requirements</a>
+      <a class="tab" href="#/about" data-tab="about" role="tab">About</a>
+    </nav>
+
+    <div class="topActions">
+      <a class="btn" href="./data/bmrs_data_catalogue.json" title="Open raw JSON">JSON</a>
+      <a class="btn secondary" href="./schemas/bmrs_schema.json" title="Open schema">Schema</a>
+      <button class="btn secondary" id="copyLinkBtn" title="Copy deep link to clipboard">Copy link</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="app">
+      <div class="card">
+        <div class="cardHd">
+          <div class="cardTitle">Loading…</div>
+          <div class="badge warn" id="loadBadge">Fetching catalogue</div>
+        </div>
+        <div class="cardBd">
+          <div class="muted">If this remains stuck on GitHub Pages, confirm that <span class="mono">/data/bmrs_data_catalogue.json</span> exists and is published.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="muted">Static client-side explorer (no build step). Designed for GitHub Pages.</div>
+    <div class="muted">Tip: share filtered views using the URL.</div>
+  </footer>
+
+  <script src="./assets/app.js"></script>
+</body>
+</html>
