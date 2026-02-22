@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CVA explorer – Data Catalogue Explorer</title>
+  <link rel="stylesheet" href="./app.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="nav">
+      <div class="brand">
+        <div class="brandMark" aria-hidden="true"></div>
+        <div>
+          <h1>Digital Rulebook · Catalogue Explorers</h1>
+          <small id="metaDoc"></small>
+        </div>
+      </div>
+      <div class="navlinks">
+        <a class="pill" data-nav="home" href="./index.html">Home</a>
+        <a class="pill" data-nav="cva" href="./cva.html">CVA explorer</a>
+        <a class="pill" data-nav="sva" href="./sva.html">SVA explorer</a>
+        <a class="pill" data-nav="bmrs" href="./bmrs.html">BMRS explorer</a>
+      </div>
+    </div>
+
+    <div class="hero">
+      <h2 id="pageTitle">CVA explorer</h2>
+      <p id="pageSubtitle">Clustered view of the CVA Data Catalogue Annex B (data dictionary).</p>
+    </div>
+
+    <div class="grid">
+      <div class="panel" style="grid-column: span 12;">
+        <div class="controls">
+          <div class="control wide">
+            <label for="q">Search</label>
+            <input id="q" placeholder="Search by reference, name/description, notes, defined_in, section..." />
+          </div>
+          <div class="control">
+            <label for="cluster">Cluster</label>
+            <select id="cluster"></select>
+          </div>
+          <div class="control">
+            <label for="domain">Domain</label>
+            <select id="domain"></select>
+          </div>
+          <div class="control">
+            <label for="semantic">Semantic type</label>
+            <select id="semantic"></select>
+          </div>
+          <div class="control">
+            <label for="minFlow">Min flow count</label>
+            <select id="minFlow">
+              <option value="0">0+</option>
+              <option value="1">1+</option>
+              <option value="2">2+</option>
+              <option value="5">5+</option>
+              <option value="10">10+</option>
+              <option value="25">25+</option>
+              <option value="50">50+</option>
+            </select>
+          </div>
+          <div class="control">
+            <label>&nbsp;</label>
+            <div class="row">
+              <label class="pill" style="cursor:pointer; user-select:none;">
+                <input id="onlyComputable" type="checkbox" style="width:auto; margin:0;"> computable
+              </label>
+              <label class="pill" style="cursor:pointer; user-select:none;">
+                <input id="onlyOntology" type="checkbox" style="width:auto; margin:0;"> ontology candidate
+              </label>
+              <label class="pill" style="cursor:pointer; user-select:none;">
+                <input id="onlyValidSet" type="checkbox" style="width:auto; margin:0;"> has valid set
+              </label>
+            </div>
+          </div>
+          <div class="control">
+            <label>&nbsp;</label>
+            <div class="row" style="justify-content:space-between; align-items:center;">
+              <span class="badge info" id="resultCount">0 items</span>
+              <button id="reset" class="pill" style="cursor:pointer;">Reset</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="grid-column: span 12;">
+        <div class="kpis">
+          <div class="kpi" id="kpiTotal"><div class="num mono">0</div><div class="lbl">items (filtered)</div></div>
+          <div class="kpi" id="kpiComputable"><div class="num mono">0</div><div class="lbl">computable</div></div>
+          <div class="kpi" id="kpiOntology"><div class="num mono">0</div><div class="lbl">ontology candidates</div></div>
+          <div class="kpi" id="kpiValidSet"><div class="num mono">0</div><div class="lbl">with valid sets</div></div>
+        </div>
+      </div>
+
+      <div class="panel" style="grid-column: span 12;">
+        <div class="row" style="justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <h3 style="margin:0;">Catalogue items</h3>
+          <div class="small">Click a row for full details</div>
+        </div>
+        <div class="tableWrap">
+          <table id="tbl">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      Tip: filters are encoded in the URL hash so you can share a pre-filtered view.
+    </div>
+  </div>
+
+  <div class="modalBack" id="modalBack">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modalHead">
+        <div>
+          <h3 id="modalTitle">Item</h3>
+          <div id="modalMeta" class="small"></div>
+        </div>
+        <button id="modalClose" aria-label="Close">Close</button>
+      </div>
+      <div style="margin-top:10px;">
+        <div class="small" style="margin-bottom:6px;">Raw JSON (source record)</div>
+        <pre id="modalJson"></pre>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initExplorer } from './app.js';
+    const CONFIG = ({
+  id: 'cva',
+  title: 'CVA explorer',
+  subtitle: 'Clustered view of CVA Data Catalogue Annex B data items (data dictionary).',
+  metaDocLine: '',
+  dataPaths: ['./data/cva_annex_b_data.json','./cva_annex_b_data.json'],
+  columns: [
+    {key:'__id', label:'Item ref', mono:true},
+    {key:'__name', label:'Item name'},
+    {key:'defined_in', label:'Defined in'},
+    {key:'item_ownership', label:'Ownership'},
+    {key:'__cluster', label:'Cluster'},
+    {key:'__semantic', label:'Semantic', mono:true},
+    {key:'__domain', label:'Domain', mono:true},
+    {key:'units', label:'Units', mono:true},
+    {key:'__flow', label:'Flow', mono:true},
+    {key:'__computable', label:'Computable', mono:true},
+    {key:'__ontology', label:'Ont.', mono:true},
+    {key:'__hasValidSet', label:'Valid set', mono:true},
+  ],
+  extractRecords: (raw) => raw?.data_items ?? [],
+  describeRecord: (r) => {
+    const bits = [];
+    if (r.__id) bits.push(`<span class="badge info">${r.__id}</span>`);
+    if (r.defined_in) bits.push(`<span class="badge">${r.defined_in}</span>`);
+    if (r.item_ownership) bits.push(`<span class="badge">${r.item_ownership}</span>`);
+    if (r.__domain) bits.push(`<span class="badge purple">${r.__domain}</span>`);
+    if (r.units) bits.push(`<span class="badge">${r.units}</span>`);
+    if (r.valid_set_name) bits.push(`<span class="badge warn">valid set: ${r.valid_set_name}</span>`);
+    return bits.join(' ');
+  }
+});
+
+    initExplorer(CONFIG).catch(err => {
+      console.error(err);
+      document.querySelector('#pageSubtitle').textContent =
+        'Failed to load the catalogue JSON. Check the file paths in your repo and refresh. ' +
+        'Details: ' + (err?.message || err);
+    });
+  </script>
+</body>
+</html>
