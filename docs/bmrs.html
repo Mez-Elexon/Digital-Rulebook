@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BMRS explorer – Data Catalogue Explorer</title>
+  <link rel="stylesheet" href="./app.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="nav">
+      <div class="brand">
+        <div class="brandMark" aria-hidden="true"></div>
+        <div>
+          <h1>Digital Rulebook · Catalogue Explorers</h1>
+          <small id="metaDoc"></small>
+        </div>
+      </div>
+      <div class="navlinks">
+        <a class="pill" data-nav="home" href="./index.html">Home</a>
+        <a class="pill" data-nav="cva" href="./cva.html">CVA explorer</a>
+        <a class="pill" data-nav="sva" href="./sva.html">SVA explorer</a>
+        <a class="pill" data-nav="bmrs" href="./bmrs.html">BMRS explorer</a>
+      </div>
+    </div>
+
+    <div class="hero">
+      <h2 id="pageTitle">BMRS explorer</h2>
+      <p id="pageSubtitle">Unified explorer across BMRS reporting items, calculated items, and validation/functional rules.</p>
+    </div>
+
+    <div class="grid">
+      <div class="panel" style="grid-column: span 12;">
+        <div class="controls">
+          <div class="control wide">
+            <label for="q">Search</label>
+            <input id="q" placeholder="Search by reference, name/description, notes, defined_in, section..." />
+          </div>
+          <div class="control">
+            <label for="cluster">Cluster</label>
+            <select id="cluster"></select>
+          </div>
+          <div class="control">
+            <label for="domain">Domain</label>
+            <select id="domain"></select>
+          </div>
+          <div class="control">
+            <label for="semantic">Semantic type</label>
+            <select id="semantic"></select>
+          </div>
+          <div class="control">
+            <label for="minFlow">Min flow count</label>
+            <select id="minFlow">
+              <option value="0">0+</option>
+              <option value="1">1+</option>
+              <option value="2">2+</option>
+              <option value="5">5+</option>
+              <option value="10">10+</option>
+              <option value="25">25+</option>
+              <option value="50">50+</option>
+            </select>
+          </div>
+          <div class="control">
+            <label>&nbsp;</label>
+            <div class="row">
+              <label class="pill" style="cursor:pointer; user-select:none;">
+                <input id="onlyComputable" type="checkbox" style="width:auto; margin:0;"> computable
+              </label>
+              <label class="pill" style="cursor:pointer; user-select:none;">
+                <input id="onlyOntology" type="checkbox" style="width:auto; margin:0;"> ontology candidate
+              </label>
+              <label class="pill" style="cursor:pointer; user-select:none;">
+                <input id="onlyValidSet" type="checkbox" style="width:auto; margin:0;"> has valid set
+              </label>
+            </div>
+          </div>
+          <div class="control">
+            <label>&nbsp;</label>
+            <div class="row" style="justify-content:space-between; align-items:center;">
+              <span class="badge info" id="resultCount">0 items</span>
+              <button id="reset" class="pill" style="cursor:pointer;">Reset</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="grid-column: span 12;">
+        <div class="kpis">
+          <div class="kpi" id="kpiTotal"><div class="num mono">0</div><div class="lbl">items (filtered)</div></div>
+          <div class="kpi" id="kpiComputable"><div class="num mono">0</div><div class="lbl">computable</div></div>
+          <div class="kpi" id="kpiOntology"><div class="num mono">0</div><div class="lbl">ontology candidates</div></div>
+          <div class="kpi" id="kpiValidSet"><div class="num mono">0</div><div class="lbl">with valid sets</div></div>
+        </div>
+      </div>
+
+      <div class="panel" style="grid-column: span 12;">
+        <div class="row" style="justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <h3 style="margin:0;">Catalogue items</h3>
+          <div class="small">Click a row for full details</div>
+        </div>
+        <div class="tableWrap">
+          <table id="tbl">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      Tip: filters are encoded in the URL hash so you can share a pre-filtered view.
+    </div>
+  </div>
+
+  <div class="modalBack" id="modalBack">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modalHead">
+        <div>
+          <h3 id="modalTitle">Item</h3>
+          <div id="modalMeta" class="small"></div>
+        </div>
+        <button id="modalClose" aria-label="Close">Close</button>
+      </div>
+      <div style="margin-top:10px;">
+        <div class="small" style="margin-bottom:6px;">Raw JSON (source record)</div>
+        <pre id="modalJson"></pre>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initExplorer } from './app.js';
+    const CONFIG = ({
+  id: 'bmrs',
+  title: 'BMRS explorer',
+  subtitle: 'BMRS data catalogue in three views: reporting items, calculated items, and functional/validation rules (flattened).',
+  metaDocLine: '',
+  dataPaths: ['./data/bmrs_data_catalogue.json','./bmrs_data_catalogue.json'],
+  columns: [
+    {key:'__kind', label:'Type', mono:true},
+    {key:'__id', label:'Code / ID', mono:true},
+    {key:'__name', label:'Name / description'},
+    {key:'frequency', label:'Frequency', mono:true},
+    {key:'format', label:'Format', mono:true},
+    {key:'temporal_scope', label:'Temporal scope', mono:true},
+    {key:'granularity', label:'Granularity', mono:true},
+    {key:'bsc_section', label:'BSC section', mono:true},
+    {key:'__cluster', label:'Cluster'},
+    {key:'__semantic', label:'Semantic', mono:true},
+    {key:'__computable', label:'Computable', mono:true},
+    {key:'__ontology', label:'Ont.', mono:true},
+  ],
+  extractRecords: (raw) => {
+    const out = [];
+    for (const r of (raw?.reporting_items ?? [])){
+      out.push({ __kind: 'Reporting', ...r });
+    }
+    for (const c of (raw?.calculated_data_items ?? [])){
+      out.push({ __kind: 'Calculated', ...c });
+    }
+    const fr = raw?.functional_requirements ?? {};
+    for (const [sectionName, sectionObj] of Object.entries(fr)){
+      const rules = sectionObj?.rules ?? [];
+      for (const rule of rules){
+        out.push({ __kind: 'Rule', __section: sectionName, ...rule });
+      }
+    }
+    return out;
+  },
+  describeRecord: (r) => {
+    const bits = [];
+    if (r.__kind) bits.push(`<span class="badge info">${r.__kind}</span>`);
+    if (r.__section) bits.push(`<span class="badge">section: ${r.__section}</span>`);
+    if (r.bmrs_code) bits.push(`<span class="badge purple">BMRS: ${r.bmrs_code}</span>`);
+    if (r.calculation_code) bits.push(`<span class="badge purple">calc: ${r.calculation_code}</span>`);
+    if (r.rule_id) bits.push(`<span class="badge purple">rule: ${r.rule_id}</span>`);
+    if (r.data_source) bits.push(`<span class="badge">source: ${r.data_source}</span>`);
+    if (r.bsc_section) bits.push(`<span class="badge">BSC: ${r.bsc_section}</span>`);
+    return bits.join(' ');
+  }
+});
+
+    initExplorer(CONFIG).catch(err => {
+      console.error(err);
+      document.querySelector('#pageSubtitle').textContent =
+        'Failed to load the catalogue JSON. Check the file paths in your repo and refresh. ' +
+        'Details: ' + (err?.message || err);
+    });
+  </script>
+</body>
+</html>
