@@ -1,0 +1,2673 @@
+{
+  "metadata": {
+    "document_title": "BMRS Data Catalogue",
+    "document_reference": "BMRS-DC",
+    "version": "5.0",
+    "effective_from_date": "2025-06-26",
+    "status": "LIVE",
+    "smart_level": 2,
+    "smart_level_notes": "Level 2-3: Machine-readable. Reporting requirements decomposed into discrete items with semantic classification, data provider attribution, temporal scope, granularity, BSC section references, and ontology candidacy. Functional requirements and validation rules extracted as computable clauses. Calculated data items linked to BSC Section T formulae.",
+    "parent_code": "Balancing and Settlement Code",
+    "bsc_section_reference": "Section V, Section X Annex X-1",
+    "copyright_holder": "ELEXON Limited",
+    "amendment_history": [
+      {
+        "version": "1.0",
+        "date": "2019-06-27",
+        "description": "Creation of Document, P372 June 2019 Release"
+      },
+      {
+        "version": "2.0",
+        "date": "2020-02-27",
+        "description": "February 2020 Release P394"
+      },
+      {
+        "version": "3.0",
+        "date": "2023-11-02",
+        "description": "CP1583"
+      },
+      {
+        "version": "4.0",
+        "date": "2025-02-24",
+        "description": "February 2025 Standard Release P442"
+      },
+      {
+        "version": "5.0",
+        "date": "2025-06-26",
+        "description": "June 2025 Standard Release P480"
+      }
+    ],
+    "associated_documents": [
+      {
+        "title": "Service Description for Balancing Mechanism Reporting",
+        "relationship": "parent",
+        "identifier": "SD-BMR"
+      },
+      {
+        "title": "Balancing Mechanism Reporting Agent User Requirements Specification",
+        "relationship": "child",
+        "identifier": "BMRA-URS"
+      },
+      {
+        "title": "Reporting Catalogue",
+        "relationship": "sibling",
+        "identifier": "Reporting-Catalogue"
+      },
+      {
+        "title": "CVA Data Catalogue",
+        "relationship": "sibling",
+        "identifier": "CVA-DC"
+      },
+      {
+        "title": "SVA Data Catalogue",
+        "relationship": "sibling",
+        "identifier": "SVA-DC"
+      },
+      {
+        "title": "BSC Section V: Reporting",
+        "relationship": "cross-reference",
+        "identifier": "BSC-Section-V"
+      },
+      {
+        "title": "BSC Section Q: Balancing Mechanism Activities",
+        "relationship": "cross-reference",
+        "identifier": "BSC-Section-Q"
+      },
+      {
+        "title": "BSC Section T: Settlement",
+        "relationship": "cross-reference",
+        "identifier": "BSC-Section-T"
+      },
+      {
+        "title": "BSC Section M: Credit Cover and Credit Default",
+        "relationship": "cross-reference",
+        "identifier": "BSC-Section-M"
+      },
+      {
+        "title": "Transparency Regulation",
+        "relationship": "cross-reference",
+        "identifier": "EU-Transparency-Reg"
+      }
+    ],
+    "statistics": {
+      "total_reporting_items": 93,
+      "calculated_data_items": 26,
+      "by_table": {
+        "1": 68,
+        "2": 19,
+        "3": 1,
+        "4": 3,
+        "5": 1,
+        "6": 1
+      },
+      "by_semantic_type": {
+        "measurement": 48,
+        "operational": 5,
+        "forecast": 6,
+        "unclassified": 2,
+        "operational_event": 1,
+        "financial": 8,
+        "reference_data": 3,
+        "transparency": 19,
+        "regulatory": 1
+      },
+      "by_data_provider": {
+        "NETSO": 83,
+        "BMRA (calculated)": 7,
+        "BSC Parties (via BMRA)": 1,
+        "SAA": 2
+      },
+      "ontology_candidates": 82,
+      "computable_items": 8,
+      "functional_rules_extracted": 8
+    }
+  },
+  "acronyms": {
+    "BSC": {
+      "expansion": "Balancing and Settlement Code",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "CVA": {
+      "expansion": "Central Volume Allocation",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "NETA": {
+      "expansion": "New Electricity Trading Arrangements",
+      "source_code": "BSC",
+      "bsc_defined_term": false
+    },
+    "IDD": {
+      "expansion": "Interface Definition and Design",
+      "source_code": "NETA",
+      "bsc_defined_term": false
+    },
+    "NETSO": {
+      "expansion": "National Electricity Transmission System Operator",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "BMRA": {
+      "expansion": "Balancing Mechanism Reporting Agent",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "ECVAA": {
+      "expansion": "Energy Contract Volume Aggregation Agent",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "SAA": {
+      "expansion": "Settlement Administration Agent",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "CRA": {
+      "expansion": "Central Registration Agent",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "CDCA": {
+      "expansion": "Central Data Collection Agent",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "FAA": {
+      "expansion": "Funds Administration Agent",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "SVAA": {
+      "expansion": "Supplier Volume Allocation Agent",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "BM": {
+      "expansion": "Balancing Mechanism",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "GSP": {
+      "expansion": "Grid Supply Point",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "FPN": {
+      "expansion": "Final Physical Notification",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "QPN": {
+      "expansion": "Quiescent Physical Notification",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "PN": {
+      "expansion": "Physical Notification",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "MEL": {
+      "expansion": "Maximum Export Limit",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "MIL": {
+      "expansion": "Maximum Import Limit",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "SEL": {
+      "expansion": "Stable Export Limit",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "SIL": {
+      "expansion": "Stable Import Limit",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "MDV": {
+      "expansion": "Maximum Delivery Volume",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "MDP": {
+      "expansion": "Maximum Delivery Period",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "MZT": {
+      "expansion": "Minimum Zero Time",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "MNZT": {
+      "expansion": "Minimum Non-Zero Time",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "NDZ": {
+      "expansion": "Notice to Deviate from Zero",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "NTB": {
+      "expansion": "Notice to Deliver Bids",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "NTO": {
+      "expansion": "Notice to Deliver Offers",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "ECVN": {
+      "expansion": "Energy Contract Volume Notification",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "MVRN": {
+      "expansion": "Metered Volume Reallocation Notification",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "ECVNA": {
+      "expansion": "Energy Contract Volume Notification Agent",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "ECVNAA": {
+      "expansion": "Energy Contract Volume Notification Agent Authorisation",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "MVRNA": {
+      "expansion": "Metered Volume Reallocation Notification Agent",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "MVRNAA": {
+      "expansion": "Metered Volume Reallocation Notification Agent Authorisation",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "NIV": {
+      "expansion": "Net Imbalance Volume",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "PAR": {
+      "expansion": "Price Average Reference",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "NGC": {
+      "expansion": "National Grid Company",
+      "source_code": "Grid Code",
+      "bsc_defined_term": false
+    },
+    "NDFC": {
+      "expansion": "NGC Data File Catalogue",
+      "source_code": "Grid Code",
+      "bsc_defined_term": false
+    },
+    "EDT01": {
+      "expansion": "Electronic Data Transfer file reference 01 (NETSO to BMRA)",
+      "source_code": "NETA IDD",
+      "bsc_defined_term": false
+    },
+    "BSAD": {
+      "expansion": "Balancing Services Adjustment Data",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "RR": {
+      "expansion": "Replacement Reserve",
+      "source_code": "BSC/EU TERRE",
+      "bsc_defined_term": true
+    },
+    "TERRE": {
+      "expansion": "Trans European Replacement Reserves Exchange",
+      "source_code": "EU Regulation",
+      "bsc_defined_term": false
+    },
+    "STOR": {
+      "expansion": "Short Term Operating Reserve",
+      "source_code": "Grid Code/BSC",
+      "bsc_defined_term": false
+    },
+    "CADL": {
+      "expansion": "Continuous Acceptance Duration Limit",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "ESNA": {
+      "expansion": "Exempt Supplier Notification Agent",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "MPAN": {
+      "expansion": "Meter Point Administration Number",
+      "source_code": "MRA/Distribution Code",
+      "bsc_defined_term": false
+    },
+    "REMIT": {
+      "expansion": "Regulation on Energy Market Integrity and Transparency",
+      "source_code": "EU Regulation",
+      "bsc_defined_term": false
+    },
+    "VNNR": {
+      "expansion": "Virtual Notification of New Registration",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "NDFD": {
+      "expansion": "National Demand Forecast (Daily)",
+      "source_code": "Grid Code/BSC",
+      "bsc_defined_term": false
+    },
+    "TSDFD": {
+      "expansion": "Transmission System Demand Forecast (Daily)",
+      "source_code": "Grid Code/BSC",
+      "bsc_defined_term": false
+    },
+    "NDFW": {
+      "expansion": "National Demand Forecast (Weekly)",
+      "source_code": "Grid Code/BSC",
+      "bsc_defined_term": false
+    },
+    "TSDFW": {
+      "expansion": "Transmission System Demand Forecast (Weekly)",
+      "source_code": "Grid Code/BSC",
+      "bsc_defined_term": false
+    },
+    "OCNMFD": {
+      "expansion": "Generating Plant Demand Margin Forecast (Daily)",
+      "source_code": "Grid Code",
+      "bsc_defined_term": false
+    },
+    "OCNMFW": {
+      "expansion": "Generating Plant Demand Margin Forecast (Weekly)",
+      "source_code": "Grid Code",
+      "bsc_defined_term": false
+    },
+    "INDGEN": {
+      "expansion": "Indicated Generation",
+      "source_code": "Grid Code",
+      "bsc_defined_term": false
+    },
+    "INDDEM": {
+      "expansion": "Indicated Demand",
+      "source_code": "Grid Code",
+      "bsc_defined_term": false
+    },
+    "IMBALNGC": {
+      "expansion": "Indicated Imbalance (NGC)",
+      "source_code": "Grid Code",
+      "bsc_defined_term": false
+    },
+    "SPLD": {
+      "expansion": "Surplus Forecast (Daily)",
+      "source_code": "Grid Code",
+      "bsc_defined_term": false
+    },
+    "SPLW": {
+      "expansion": "Surplus Forecast (Weekly)",
+      "source_code": "Grid Code",
+      "bsc_defined_term": false
+    },
+    "MELNGC": {
+      "expansion": "Indicated Margin (NGC)",
+      "source_code": "Grid Code",
+      "bsc_defined_term": false
+    },
+    "INDO": {
+      "expansion": "Initial National Demand Out-Turn",
+      "source_code": "BSC/Grid Code",
+      "bsc_defined_term": false
+    },
+    "ITSDO": {
+      "expansion": "Initial Transmission System Demand Out-Turn",
+      "source_code": "BSC/Grid Code",
+      "bsc_defined_term": false
+    },
+    "SYS_WARN": {
+      "expansion": "System Warnings",
+      "source_code": "Grid Code",
+      "bsc_defined_term": false
+    },
+    "ABSVD": {
+      "expansion": "Applicable Balancing Services Volume Data",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "BAU": {
+      "expansion": "Business As Usual",
+      "source_code": "General",
+      "bsc_defined_term": false
+    },
+    "BSCCo": {
+      "expansion": "Balancing and Settlement Code Company",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "SP": {
+      "expansion": "Settlement Period",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "BSAV": {
+      "expansion": "Balancing Services Adjustment Volume",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    },
+    "BSAC": {
+      "expansion": "Balancing Services Adjustment Cost",
+      "source_code": "BSC",
+      "bsc_defined_term": true
+    }
+  },
+  "functional_requirements": {
+    "validation": {
+      "clause": "2.1",
+      "rules": [
+        {
+          "rule_id": "BMRS-VAL-001",
+          "description": "Where Sell Price Volume Adjustment (Energy) is non-zero, Buy Price Volume Adjustment (Energy) must be zero, and vice versa",
+          "data_source": "NETSO Balancing Services Adjustment Data",
+          "is_computable": true,
+          "semantic_type": "constraint"
+        },
+        {
+          "rule_id": "BMRS-VAL-002",
+          "description": "Where Sell Price Volume Adjustment (System) is non-zero, Buy Price Volume Adjustment (System) must be zero, and vice versa",
+          "data_source": "NETSO Balancing Services Adjustment Data",
+          "is_computable": true,
+          "semantic_type": "constraint"
+        }
+      ]
+    },
+    "format": {
+      "clause": "2.2",
+      "rules": [
+        {
+          "rule_id": "BMRS-FMT-001",
+          "description": "All BMRS data available as table of data as specified in BMRS Specification"
+        },
+        {
+          "rule_id": "BMRS-FMT-002",
+          "description": "Certain cases available as graphic, pictorial or other form"
+        },
+        {
+          "rule_id": "BMRS-FMT-003",
+          "description": "Where possible, BMRS data should be made available in a machine readable format"
+        }
+      ]
+    },
+    "data_retention": {
+      "clause": "2.3",
+      "default_retention_period": "12 months",
+      "retention_basis": "After Settlement Day to which data relates, or day on which forecast data was provided"
+    },
+    "credit_default_reporting": {
+      "clause": "3.2",
+      "bsc_section_reference": "Section M",
+      "rules": [
+        {
+          "rule_id": "BMRS-CDR-001",
+          "description": "Level 1 Credit Default statement (Section M3.2.6(b)) remains until cancelled by ECVAA"
+        },
+        {
+          "rule_id": "BMRS-CDR-002",
+          "description": "Level 2 Credit Default statement (Section M3.3.3(b)) remains until cancelled by ECVAA"
+        },
+        {
+          "rule_id": "BMRS-CDR-003",
+          "description": "Notice following Trading Dispute resolution (Section M3.5(a)) remains for one month"
+        }
+      ]
+    },
+    "exempt_supply_reporting": {
+      "clause": "3.4",
+      "description": "Total Exempt Supply Volumes Data available from BMRS via API where received from SAA",
+      "data_provider": "SAA"
+    }
+  },
+  "calculated_data_items": [
+    {
+      "calculation_code": "CBn_ij",
+      "expansion": "Period BM Unit Bid Cashflow",
+      "bsc_section": "Section T3",
+      "is_indicative": false,
+      "derives_from": "Section T3",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "COn_ij",
+      "expansion": "Period BM Unit Offer Cashflow",
+      "bsc_section": "Section T3",
+      "is_indicative": false,
+      "derives_from": "Section T3",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "ICBn_ij",
+      "expansion": "Indicative Period BM Unit Bid Cashflow",
+      "bsc_section": "Section T3",
+      "is_indicative": true,
+      "derives_from": "Section T3",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "ICOn_ij",
+      "expansion": "Indicative Period BM Unit Offer Cashflow",
+      "bsc_section": "Section T3",
+      "is_indicative": true,
+      "derives_from": "Section T3",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "IQABn_ij",
+      "expansion": "Indicative Period BM Unit Total Accepted Bid Volume",
+      "bsc_section": "Section T3",
+      "is_indicative": true,
+      "derives_from": "Section T3",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "IQABkn_ij",
+      "expansion": "Indicative Period Accepted Bid Volume",
+      "bsc_section": "Section T3",
+      "is_indicative": true,
+      "derives_from": "Section T3",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "IQAOn_ij",
+      "expansion": "Indicative Period BM Unit Total Accepted Offer Volume",
+      "bsc_section": "Section T3",
+      "is_indicative": true,
+      "derives_from": "Section T3",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "IQAOkn_ij",
+      "expansion": "Indicative Period Accepted Offer Volume",
+      "bsc_section": "Section T3",
+      "is_indicative": true,
+      "derives_from": "Section T3",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "INIVj",
+      "expansion": "Indicative Net Imbalance Volume",
+      "bsc_section": "Section T",
+      "is_indicative": true,
+      "derives_from": "Section T",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "ISBPj",
+      "expansion": "Indicative System Buy Price",
+      "bsc_section": "Section T",
+      "is_indicative": true,
+      "derives_from": "Section T",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "ISSPj",
+      "expansion": "Indicative System Sell Price",
+      "bsc_section": "Section T",
+      "is_indicative": true,
+      "derives_from": "Section T",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "QABn_ij",
+      "expansion": "Period BM Unit Total Accepted Bid Volume",
+      "bsc_section": "Section T3",
+      "is_indicative": false,
+      "derives_from": "Section T3",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "QABkn_ij",
+      "expansion": "Period Accepted Bid Volume",
+      "bsc_section": "Section T3",
+      "is_indicative": false,
+      "derives_from": "Section T3",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "QAOn_ij",
+      "expansion": "Period BM Unit Total Accepted Offer Volume",
+      "bsc_section": "Section T3",
+      "is_indicative": false,
+      "derives_from": "Section T3",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "QAOkn_ij",
+      "expansion": "Period Accepted Offer Volume",
+      "bsc_section": "Section T3",
+      "is_indicative": false,
+      "derives_from": "Section T3",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "ETLMO+",
+      "expansion": "Estimated Delivering Transmission Losses Adjustment",
+      "bsc_section": "Section T",
+      "is_indicative": true,
+      "derives_from": "Section T",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "ETLMO-",
+      "expansion": "Estimated Offtaking Transmission Losses Adjustment",
+      "bsc_section": "Section T",
+      "is_indicative": true,
+      "derives_from": "Section T",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "TLMO+",
+      "expansion": "Delivering Transmission Losses Adjustment",
+      "bsc_section": "Section T",
+      "is_indicative": false,
+      "derives_from": "Section T",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "TLMO-",
+      "expansion": "Offtaking Transmission Losses Adjustment",
+      "bsc_section": "Section T",
+      "is_indicative": false,
+      "derives_from": "Section T",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "IRRABn_ij",
+      "expansion": "Indicative Period RR Total Accepted Bid Volume",
+      "bsc_section": "Section T3",
+      "is_indicative": true,
+      "derives_from": "Section T3",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "IRRAOn_ij",
+      "expansion": "Indicative Period RR Total Accepted Offer Volume",
+      "bsc_section": "Section T3",
+      "is_indicative": true,
+      "derives_from": "Section T3",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "IRRABkn_ij",
+      "expansion": "Indicative Period RR Accepted Bid Volume",
+      "bsc_section": "Section T3",
+      "is_indicative": true,
+      "derives_from": "Section T3",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "IRRAOkn_ij",
+      "expansion": "Indicative Period RR Accepted Offer Volume",
+      "bsc_section": "Section T3",
+      "is_indicative": true,
+      "derives_from": "Section T3",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "ICCRiJ",
+      "expansion": "Indicative Quarter-Hour RR Cashflow",
+      "bsc_section": "Section T3",
+      "is_indicative": true,
+      "derives_from": "Section T3",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "ICRRiJ",
+      "expansion": "Indicative Period RR BM Unit Cashflow",
+      "bsc_section": "Section T3",
+      "is_indicative": true,
+      "derives_from": "Section T3",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    },
+    {
+      "calculation_code": "IRRAPJ",
+      "expansion": "Indicative RR Activation Price",
+      "bsc_section": "Section T3",
+      "is_indicative": true,
+      "derives_from": "Section T3",
+      "semantic_type": "calculated",
+      "ontology_candidate": true
+    }
+  ],
+  "reporting_items": [
+    {
+      "data_description": "2-14 day ahead National Demand forecast (NDFD) - daily peak half hour value",
+      "frequency": "Daily",
+      "format": "Tabular",
+      "default": "Previous forecast",
+      "bmrs_code": "NDFD",
+      "temporal_scope": "D+2 to D+14",
+      "granularity": "daily peak half hour",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-001"
+    },
+    {
+      "data_description": "2-14 day ahead Transmission System Demand forecast (TSDFD) - daily peak half hour value",
+      "frequency": "Daily",
+      "format": "Tabular",
+      "default": "Previous forecast",
+      "bmrs_code": "TSDFD",
+      "temporal_scope": "D+2 to D+14",
+      "granularity": "daily peak half hour",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-002"
+    },
+    {
+      "data_description": "2-14 day ahead daily Generating Plant Demand Margin forecast (OCNMFD) - daily peak half hour value",
+      "frequency": "Daily",
+      "format": "Tabular",
+      "default": "Previous forecast",
+      "bmrs_code": "OCNMFD",
+      "temporal_scope": "D+2 to D+14",
+      "granularity": "daily peak half hour",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-003"
+    },
+    {
+      "data_description": "2-14 day ahead daily Zonal Output Usable for each System Zone - daily peak half hour value",
+      "frequency": "Daily where provided by the NETSO to a User",
+      "format": "Download only",
+      "default": "Previous submission",
+      "bmrs_code": null,
+      "temporal_scope": "D+2 to D+14",
+      "granularity": "daily peak half hour per zone",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-004"
+    },
+    {
+      "data_description": "2-14 day ahead daily Total Output Usable and Total Output Usable (plus expected Interconnector transfer capacity) by Fuel Type Category",
+      "frequency": "Daily where provided by the NETSO to a User",
+      "format": "Tabular and graphic",
+      "default": "Previous submission",
+      "bmrs_code": null,
+      "temporal_scope": "D+2 to D+14",
+      "granularity": "daily by fuel type",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-005"
+    },
+    {
+      "data_description": "2-14 day ahead daily Output Usable by BM Unit - daily peak half hour value",
+      "frequency": "Daily where provided by the NETSO to a User",
+      "format": "Download only",
+      "default": "Previous submission",
+      "bmrs_code": null,
+      "temporal_scope": "D+2 to D+14",
+      "granularity": "daily peak half hour per BM Unit",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-006"
+    },
+    {
+      "data_description": "2-49 day ahead daily Zonal Output Usable for each System Zone and daily Total Output Usable - daily peak half hour value",
+      "frequency": "When provided by the NETSO to a User",
+      "format": "Download only",
+      "default": "Previous submission",
+      "bmrs_code": null,
+      "temporal_scope": "D+2 to D+49",
+      "granularity": "daily peak half hour per zone",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-007"
+    },
+    {
+      "data_description": "2-52 week ahead National Demand forecast (NDFW) - weekly peak half hour value",
+      "frequency": "Weekly",
+      "format": "Tabular",
+      "default": "Previous forecast",
+      "bmrs_code": "NDFW",
+      "temporal_scope": "W+2 to W+52",
+      "granularity": "weekly peak half hour",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-008"
+    },
+    {
+      "data_description": "2-52 week ahead Transmission System Demand forecast (TSDFW) - weekly peak half hour value",
+      "frequency": "Weekly",
+      "format": "Tabular",
+      "default": "Previous forecast",
+      "bmrs_code": "TSDFW",
+      "temporal_scope": "W+2 to W+52",
+      "granularity": "weekly peak half hour",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-009"
+    },
+    {
+      "data_description": "2-52 week ahead weekly Generating Plant Demand Margin forecast (OCNMFW) - weekly peak half hour value",
+      "frequency": "Weekly",
+      "format": "Tabular",
+      "default": "Previous forecast",
+      "bmrs_code": "OCNMFW",
+      "temporal_scope": "W+2 to W+52",
+      "granularity": "weekly peak half hour",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-010"
+    },
+    {
+      "data_description": "2-52 week ahead weekly Zonal Output Usable for each System Zone - weekly peak half hour value",
+      "frequency": "Weekly where provided by the NETSO to a User",
+      "format": "Download only",
+      "default": "Previous submission",
+      "bmrs_code": null,
+      "temporal_scope": "W+2 to W+52",
+      "granularity": "weekly peak half hour per zone",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-011"
+    },
+    {
+      "data_description": "2-52 week ahead weekly Total Output Usable and Total Output Usable (plus expected Interconnector transfer capacity) by Fuel Type Category",
+      "frequency": "Weekly where provided by the NETSO to a User",
+      "format": "Tabular and graphic",
+      "default": "Previous submission",
+      "bmrs_code": null,
+      "temporal_scope": "W+2 to W+52",
+      "granularity": "weekly by fuel type",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-012"
+    },
+    {
+      "data_description": "2-52 week ahead weekly Output Usable by BM Unit - weekly peak half hour value",
+      "frequency": "Weekly where provided by the NETSO to a User",
+      "format": "Download only",
+      "default": "Previous submission",
+      "bmrs_code": null,
+      "temporal_scope": "W+2 to W+52",
+      "granularity": "weekly peak half hour per BM Unit",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-013"
+    },
+    {
+      "data_description": "1-2 year ahead weekly Zonal Output Usable for each System Zone and weekly Total Output Usable - weekly peak half hour value",
+      "frequency": "Twice each calendar year at approximately 6 month intervals",
+      "format": "Download only",
+      "default": "Previous submission",
+      "bmrs_code": null,
+      "temporal_scope": "1-2 years",
+      "granularity": "weekly peak half hour per zone",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-014"
+    },
+    {
+      "data_description": "3-5 year ahead weekly Zonal Output Usable for each System Zone and weekly Total Output Usable - weekly peak half hour value",
+      "frequency": "Twice each calendar year at approximately 6 month intervals",
+      "format": "Download only",
+      "default": "Previous submission",
+      "bmrs_code": null,
+      "temporal_scope": "3-5 years",
+      "granularity": "weekly peak half hour per zone",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-015"
+    },
+    {
+      "data_description": "Data relating to Emergency Acceptances",
+      "frequency": "As received",
+      "format": "Text message only",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "Real-time",
+      "granularity": "event",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "operational",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section Q",
+          "Section T"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-016"
+    },
+    {
+      "data_description": "Day ahead National Demand forecast - value for each half hour",
+      "frequency": "Daily",
+      "format": "Tabular and graphic for D-1, D to D+1. Otherwise tabular",
+      "default": "Previous forecast",
+      "bmrs_code": null,
+      "temporal_scope": "D+1",
+      "granularity": "half hour",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-017"
+    },
+    {
+      "data_description": "Day ahead Transmission System Demand forecast - value for each half hour",
+      "frequency": "Daily",
+      "format": "Tabular and graphic for D-1, D to D+1. Otherwise tabular",
+      "default": "Previous forecast",
+      "bmrs_code": null,
+      "temporal_scope": "D+1",
+      "granularity": "half hour",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-018"
+    },
+    {
+      "data_description": "Day ahead National Indicated Generation (INDGEN) and Demand (INDDEM) forecast - value for each half hour",
+      "frequency": "Daily",
+      "format": "Tabular and graphic for D-1, D to D+1. Otherwise tabular",
+      "default": "Previous forecast",
+      "bmrs_code": "INDGEN/INDDEM",
+      "temporal_scope": "D+1",
+      "granularity": "half hour",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-019"
+    },
+    {
+      "data_description": "Updates of day ahead Indicated Imbalance (IMBALNGC), INDGEN, INDDEM, National Demand forecast and Transmission System Demand forecast - values for each half hour or each remaining half hour in day D",
+      "frequency": "5 times each day",
+      "format": "Tabular and graphic for D-1, D to D+1. Otherwise tabular",
+      "default": "Previous forecast",
+      "bmrs_code": "IMBALNGC",
+      "temporal_scope": "Within-day",
+      "granularity": "half hour",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-020"
+    },
+    {
+      "data_description": "2-14 day ahead Surplus forecast (SPLD) - daily peak half hour value",
+      "frequency": "Each Business Day",
+      "format": "Tabular",
+      "default": "Previous forecast",
+      "bmrs_code": "SPLD",
+      "temporal_scope": "D+2 to D+14",
+      "granularity": "daily peak half hour",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "forecast",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-021"
+    },
+    {
+      "data_description": "2-52 week ahead Surplus forecast (SPLW) - weekly peak half hour value",
+      "frequency": "Weekly",
+      "format": "Tabular",
+      "default": "Previous forecast",
+      "bmrs_code": "SPLW",
+      "temporal_scope": "W+2 to W+52",
+      "granularity": "weekly peak half hour",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "forecast",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-022"
+    },
+    {
+      "data_description": "Day ahead Indicated Margin (MELNGC) - values for each half hour",
+      "frequency": "Daily",
+      "format": "Tabular and graphic for D-1, D to D+1. Otherwise tabular",
+      "default": "None",
+      "bmrs_code": "MELNGC",
+      "temporal_scope": "D+1",
+      "granularity": "half hour",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "forecast",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-023"
+    },
+    {
+      "data_description": "Update of MELNGC - values for each half hour or each remaining half hour in day D",
+      "frequency": "5 times each day",
+      "format": "Tabular and graphic for D-1, D to D+1. Otherwise tabular",
+      "default": "Previous forecast",
+      "bmrs_code": "MELNGC",
+      "temporal_scope": "Within-day",
+      "granularity": "half hour",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "unclassified",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": false,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-024"
+    },
+    {
+      "data_description": "System warnings (SYS_WARN)",
+      "frequency": "When received",
+      "format": "Text message only",
+      "default": "None",
+      "bmrs_code": "SYS_WARN",
+      "temporal_scope": "Real-time",
+      "granularity": "event",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "operational_event",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": false,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-025"
+    },
+    {
+      "data_description": "Balancing Services Adjustment Data (BSAD)",
+      "frequency": "Daily",
+      "format": "Tabular",
+      "default": "None",
+      "bmrs_code": "BSAD",
+      "temporal_scope": "Settlement Day",
+      "granularity": "Settlement Period",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "unclassified",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section T",
+          "Section Q"
+        ],
+        "ontology_candidate": false,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-026"
+    },
+    {
+      "data_description": "Initial National Demand Out-turn (INDO)",
+      "frequency": "Half hourly",
+      "format": "Tabular and graphic for D-1 and D. Otherwise tabular",
+      "default": "None",
+      "bmrs_code": "INDO",
+      "temporal_scope": "Real-time",
+      "granularity": "half hour",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-027"
+    },
+    {
+      "data_description": "Initial Transmission System Demand Out-Turn (ITSDO)",
+      "frequency": "Half hourly",
+      "format": "Tabular and graphic for D-1 and D. Otherwise tabular",
+      "default": "None",
+      "bmrs_code": "ITSDO",
+      "temporal_scope": "Real-time",
+      "granularity": "half hour",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-028"
+    },
+    {
+      "data_description": "Indicative System Buy Price (ISBPj) - value for each SP",
+      "frequency": "Half hourly",
+      "format": "Tabular and graphic for D-1 and D. Otherwise tabular",
+      "default": "None",
+      "bmrs_code": "ISBPj",
+      "temporal_scope": "Real-time",
+      "granularity": "Settlement Period",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "financial",
+        "is_computable": true,
+        "data_provider": "BMRA (calculated)",
+        "bsc_section_references": [
+          "Section T"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-029"
+    },
+    {
+      "data_description": "Indicative System Sell Price (ISSPj) - value for each SP",
+      "frequency": "Half hourly",
+      "format": "Tabular and graphic for D-1 and D. Otherwise tabular",
+      "default": "None",
+      "bmrs_code": "ISSPj",
+      "temporal_scope": "Real-time",
+      "granularity": "Settlement Period",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "financial",
+        "is_computable": true,
+        "data_provider": "BMRA (calculated)",
+        "bsc_section_references": [
+          "Section T"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-030"
+    },
+    {
+      "data_description": "Indicative Period Accepted Bid and Offer Volumes (IQABkn_ij and IQAOkn_ij) - value for each SP",
+      "frequency": "Half hourly",
+      "format": "Tabular and graphic for D-1 and D. Otherwise tabular",
+      "default": "None",
+      "bmrs_code": "IQABkn_ij/IQAOkn_ij",
+      "temporal_scope": "Real-time",
+      "granularity": "Settlement Period",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "BMRA (calculated)",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-031"
+    },
+    {
+      "data_description": "Indicative Net Imbalance Volume (INIVj) - value for each SP",
+      "frequency": "Half hourly",
+      "format": "Tabular and graphic for D-1 and D. Otherwise tabular",
+      "default": "None",
+      "bmrs_code": "INIVj",
+      "temporal_scope": "Real-time",
+      "granularity": "Settlement Period",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "BMRA (calculated)",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-032"
+    },
+    {
+      "data_description": "Indicative Period BM Unit Total Accepted Bid and Offer Volumes (IQABn_ij and IQAOn_ij) - value for each SP",
+      "frequency": "Half hourly",
+      "format": "Tabular and graphic for D-1 and D. Otherwise tabular",
+      "default": "None",
+      "bmrs_code": "IQABn_ij/IQAOn_ij",
+      "temporal_scope": "Real-time",
+      "granularity": "Settlement Period",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "BMRA (calculated)",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-033"
+    },
+    {
+      "data_description": "Indicative Period Balancing Mechanism Bid and Offer Cashflows (ICBn_ij and ICOn_ij) - value for each SP",
+      "frequency": "Half hourly",
+      "format": "Tabular and graphic for D-1 and D. Otherwise tabular",
+      "default": "None",
+      "bmrs_code": "ICBn_ij/ICOn_ij",
+      "temporal_scope": "Real-time",
+      "granularity": "Settlement Period",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "financial",
+        "is_computable": true,
+        "data_provider": "BMRA (calculated)",
+        "bsc_section_references": [
+          "Section T"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-034"
+    },
+    {
+      "data_description": "Final Physical Notification Data per BM Unit",
+      "frequency": "As received",
+      "format": "Tabular and graphic for D-1 and D. Otherwise tabular",
+      "default": "None",
+      "bmrs_code": "FPN",
+      "temporal_scope": "Real-time",
+      "granularity": "BM Unit per Settlement Period",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "operational",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section Q",
+          "Section T"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-035"
+    },
+    {
+      "data_description": "Bid-Offer Pairs per BM Unit (prices and MW volumes)",
+      "frequency": "As received",
+      "format": "Tabular and graphic for D-1 and D. Otherwise tabular",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "Real-time",
+      "granularity": "BM Unit per Settlement Period",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "financial",
+        "is_computable": true,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section T"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-036"
+    },
+    {
+      "data_description": "Changes to Dynamic Data Set and MEL/MIL items per BM Unit (MEL, MIL, RURE, RURI, RDRE, RDRI, NDZ, NTO, NTB, MZT, MNZT, SEL, SIL, MDV, MDP)",
+      "frequency": "As received",
+      "format": "Tabular and graphic for D-1 and D. Otherwise tabular",
+      "default": "Previously submitted Dynamic Data Set",
+      "bmrs_code": "DynamicDataSet",
+      "temporal_scope": "Real-time",
+      "granularity": "BM Unit",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "operational",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section Q",
+          "Section T"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-037"
+    },
+    {
+      "data_description": "Acceptance Data per BM Unit",
+      "frequency": "As received",
+      "format": "Tabular and graphic for D-1 and D. Otherwise tabular",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "Real-time",
+      "granularity": "BM Unit per Settlement Period",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "operational",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section Q",
+          "Section T"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-038"
+    },
+    {
+      "data_description": "Zonal day ahead Transmission System Demand forecast - values for each half hour in each BMRS Zone",
+      "frequency": "Daily",
+      "format": "Tabular and graphic",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "D+1",
+      "granularity": "half hour per zone",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-039"
+    },
+    {
+      "data_description": "Zonal day ahead Indicated Generation and Indicated Demand forecast - values for each half hour in each BMRS Zone",
+      "frequency": "Daily",
+      "format": "Tabular and graphic",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "D+1",
+      "granularity": "half hour per zone",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-040"
+    },
+    {
+      "data_description": "Zonal update of Indicated Demand, Indicated Generation and Indicated Imbalance - values for each BMRS Zone",
+      "frequency": "5 times each day",
+      "format": "Tabular and graphic",
+      "default": "Previous forecast",
+      "bmrs_code": null,
+      "temporal_scope": "Within-day",
+      "granularity": "half hour per zone",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-041"
+    },
+    {
+      "data_description": "BM Unit Applicable Balancing Services Volume",
+      "frequency": "Daily (published for all days on Business Days only)",
+      "format": "Tabular",
+      "default": "None",
+      "bmrs_code": "ABSVD",
+      "temporal_scope": "Settlement Day",
+      "granularity": "BM Unit",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-042"
+    },
+    {
+      "data_description": "Out-Turn Temperature",
+      "frequency": "Daily",
+      "format": "Tabular and graphic",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "Settlement Day",
+      "granularity": "daily",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": false,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-043"
+    },
+    {
+      "data_description": "Normal Reference Temperature",
+      "frequency": "Daily",
+      "format": "Tabular and graphic",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "Settlement Day",
+      "granularity": "daily",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": false,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-044"
+    },
+    {
+      "data_description": "Low Reference Temperature",
+      "frequency": "Daily",
+      "format": "Tabular and graphic",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "Settlement Day",
+      "granularity": "daily",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": false,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-045"
+    },
+    {
+      "data_description": "High Reference Temperature",
+      "frequency": "Daily",
+      "format": "Tabular and graphic",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "Settlement Day",
+      "granularity": "daily",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": false,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-046"
+    },
+    {
+      "data_description": "Forecast Total Power Park Module Generation - value for each SP",
+      "frequency": "Daily",
+      "format": "Tabular and graphic",
+      "default": "Previous forecast",
+      "bmrs_code": null,
+      "temporal_scope": "D+1",
+      "granularity": "Settlement Period",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-047"
+    },
+    {
+      "data_description": "Total Metered Capacity - value for each SP for which Forecast Total Power Park Module Generation data is submitted",
+      "frequency": "Daily",
+      "format": "Tabular",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "D+1",
+      "granularity": "Settlement Period",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-048"
+    },
+    {
+      "data_description": "Total Instantaneous Out-Turn Generation - instantaneous value for each Fuel Type Category",
+      "frequency": "Every 5 minutes",
+      "format": "Tabular and graphic",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "Real-time",
+      "granularity": "5 minutes per fuel type",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-049"
+    },
+    {
+      "data_description": "Total Period Out-Turn Generation - value for each Fuel Type Category in each SP",
+      "frequency": "Half hourly",
+      "format": "Tabular and graphic",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "Real-time",
+      "granularity": "Settlement Period per fuel type",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-050"
+    },
+    {
+      "data_description": "BM Unit Fuel Type List",
+      "frequency": "As received",
+      "format": "Tabular",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "Standing data",
+      "granularity": "BM Unit",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "reference_data",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": false,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-051"
+    },
+    {
+      "data_description": "Transmission Energy",
+      "frequency": "Daily",
+      "format": "Tabular and graphic",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "Settlement Day",
+      "granularity": "daily",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-052"
+    },
+    {
+      "data_description": "Normal Reference Transmission Energy",
+      "frequency": "Daily",
+      "format": "Tabular and graphic",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "Settlement Day",
+      "granularity": "daily",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-053"
+    },
+    {
+      "data_description": "High Reference Transmission Energy",
+      "frequency": "Daily",
+      "format": "Tabular and graphic",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "Settlement Day",
+      "granularity": "daily",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-054"
+    },
+    {
+      "data_description": "Low Reference Transmission Energy",
+      "frequency": "Daily",
+      "format": "Tabular and graphic",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "Settlement Day",
+      "granularity": "daily",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-055"
+    },
+    {
+      "data_description": "Non-BM STOR Instructed Volume - value for each SP",
+      "frequency": "Half hourly",
+      "format": "Tabular and graphic",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "Real-time",
+      "granularity": "Settlement Period",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section T"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-056"
+    },
+    {
+      "data_description": "Transmission System Frequency - value for one or more spot times",
+      "frequency": "Every 2 minutes",
+      "format": "Tabular and graphic",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "Real-time",
+      "granularity": "2 minutes",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": false,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-057"
+    },
+    {
+      "data_description": "System Zone boundaries",
+      "frequency": "Whenever changes are made to System Zone definitions or boundaries",
+      "format": "Download only",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "Standing data",
+      "granularity": "zone",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "reference_data",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": false,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-058"
+    },
+    {
+      "data_description": "For each BM STOR Action - Acceptance Volume Pairs, Offer Price and Bid-Offer Acceptance Number",
+      "frequency": "Half hourly",
+      "format": "Tabular",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "Real-time",
+      "granularity": "Settlement Period per STOR action",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "financial",
+        "is_computable": true,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section T"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-059"
+    },
+    {
+      "data_description": "For each Non-BM STOR Action - BSAV, BSAC and Bid-Offer Acceptance Number",
+      "frequency": "Half hourly",
+      "format": "Tabular",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "Real-time",
+      "granularity": "Settlement Period per STOR action",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "operational",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section T"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-060"
+    },
+    {
+      "data_description": "Utilisation Price for each STOR Action",
+      "frequency": "Half hourly",
+      "format": "Tabular",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "Real-time",
+      "granularity": "Settlement Period per STOR action",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "financial",
+        "is_computable": true,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section T"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-061"
+    },
+    {
+      "data_description": "Reserve Scarcity Price for each STOR Action",
+      "frequency": "Half hourly",
+      "format": "Tabular",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "Real-time",
+      "granularity": "Settlement Period per STOR action",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "financial",
+        "is_computable": true,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section T"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-062"
+    },
+    {
+      "data_description": "Indicative Loss of Load Probability",
+      "frequency": "As received",
+      "format": "Tabular",
+      "default": "Most recently received Indicative Loss of Load Probability, otherwise none",
+      "bmrs_code": null,
+      "temporal_scope": "Real-time",
+      "granularity": "Settlement Period",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "forecast",
+        "is_computable": null,
+        "data_provider": "BMRA (calculated)",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-063"
+    },
+    {
+      "data_description": "Final Loss of Load Probability",
+      "frequency": "As received",
+      "format": "Tabular",
+      "default": "Most recently received Indicative Loss of Load Probability, otherwise none",
+      "bmrs_code": null,
+      "temporal_scope": "Real-time",
+      "granularity": "Settlement Period",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "forecast",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-064"
+    },
+    {
+      "data_description": "Demand Control Instruction",
+      "frequency": "As received",
+      "format": "Tabular",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "Real-time",
+      "granularity": "event",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-065"
+    },
+    {
+      "data_description": "De-Rated Margin Forecast",
+      "frequency": "As received",
+      "format": "Tabular",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "Real-time",
+      "granularity": "Settlement Period",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "forecast",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-066"
+    },
+    {
+      "data_description": "Day Ahead Regional Demand Forecast - value for each half hour and for each System Restoration Region",
+      "frequency": "Daily",
+      "format": "Tabular and graphic for D+1",
+      "default": "Previous Forecast",
+      "bmrs_code": null,
+      "temporal_scope": "D+1",
+      "granularity": "half hour per region",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section T"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-067"
+    },
+    {
+      "data_description": "Regional Demand Restored - value for each hour and for each System Restoration Region",
+      "frequency": "Daily (During a System Restoration only)",
+      "format": "Tabular",
+      "default": "None",
+      "bmrs_code": null,
+      "temporal_scope": "Real-time",
+      "granularity": "hour per region",
+      "table": 1,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section T"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T1-068"
+    },
+    {
+      "data_description": "Data specified in Article 6.1(a) of the Transparency Regulation",
+      "frequency": "As received",
+      "format": "Tabular",
+      "transparency_regulation_article": "6.1(a)",
+      "table": 2,
+      "smart_classification": {
+        "semantic_type": "transparency",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V",
+          "Transparency Regulation"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T2-069"
+    },
+    {
+      "data_description": "Data specified in Article 6.1(b) of the Transparency Regulation",
+      "frequency": "As received",
+      "format": "Tabular",
+      "transparency_regulation_article": "6.1(b)",
+      "table": 2,
+      "smart_classification": {
+        "semantic_type": "transparency",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V",
+          "Transparency Regulation"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T2-070"
+    },
+    {
+      "data_description": "Data specified in Article 6.1(c) of the Transparency Regulation",
+      "frequency": "As received",
+      "format": "Tabular",
+      "transparency_regulation_article": "6.1(c)",
+      "table": 2,
+      "smart_classification": {
+        "semantic_type": "transparency",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V",
+          "Transparency Regulation"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T2-071"
+    },
+    {
+      "data_description": "Data specified in Article 6.1(d) of the Transparency Regulation",
+      "frequency": "As received",
+      "format": "Tabular",
+      "transparency_regulation_article": "6.1(d)",
+      "table": 2,
+      "smart_classification": {
+        "semantic_type": "transparency",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V",
+          "Transparency Regulation"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T2-072"
+    },
+    {
+      "data_description": "Data specified in Article 6.1(e) of the Transparency Regulation",
+      "frequency": "As received",
+      "format": "Tabular",
+      "transparency_regulation_article": "6.1(e)",
+      "table": 2,
+      "smart_classification": {
+        "semantic_type": "transparency",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V",
+          "Transparency Regulation"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T2-073"
+    },
+    {
+      "data_description": "Data specified in Article 8.1 of the Transparency Regulation",
+      "frequency": "As received",
+      "format": "Tabular",
+      "transparency_regulation_article": "8.1",
+      "table": 2,
+      "smart_classification": {
+        "semantic_type": "transparency",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V",
+          "Transparency Regulation"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T2-074"
+    },
+    {
+      "data_description": "Data specified in Article 13.1(a) of the Transparency Regulation",
+      "frequency": "As received",
+      "format": "Tabular",
+      "transparency_regulation_article": "13.1(a)",
+      "table": 2,
+      "smart_classification": {
+        "semantic_type": "transparency",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V",
+          "Transparency Regulation"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T2-075"
+    },
+    {
+      "data_description": "Data specified in Article 13.1(c) of the Transparency Regulation",
+      "frequency": "As received",
+      "format": "Tabular",
+      "transparency_regulation_article": "13.1(c)",
+      "table": 2,
+      "smart_classification": {
+        "semantic_type": "transparency",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V",
+          "Transparency Regulation"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T2-076"
+    },
+    {
+      "data_description": "Data specified in Article 14.1(a) of the Transparency Regulation",
+      "frequency": "As received",
+      "format": "Tabular",
+      "transparency_regulation_article": "14.1(a)",
+      "table": 2,
+      "smart_classification": {
+        "semantic_type": "transparency",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V",
+          "Transparency Regulation"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T2-077"
+    },
+    {
+      "data_description": "Data specified in Article 14.1(b) of the Transparency Regulation",
+      "frequency": "As received",
+      "format": "Tabular",
+      "transparency_regulation_article": "14.1(b)",
+      "table": 2,
+      "smart_classification": {
+        "semantic_type": "transparency",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V",
+          "Transparency Regulation"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T2-078"
+    },
+    {
+      "data_description": "Data specified in Article 14.1(c) of the Transparency Regulation",
+      "frequency": "As received",
+      "format": "Tabular",
+      "transparency_regulation_article": "14.1(c)",
+      "table": 2,
+      "smart_classification": {
+        "semantic_type": "transparency",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V",
+          "Transparency Regulation"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T2-079"
+    },
+    {
+      "data_description": "Data specified in Article 14.1(d) of the Transparency Regulation",
+      "frequency": "As received",
+      "format": "Tabular",
+      "transparency_regulation_article": "14.1(d)",
+      "table": 2,
+      "smart_classification": {
+        "semantic_type": "transparency",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V",
+          "Transparency Regulation"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T2-080"
+    },
+    {
+      "data_description": "Data specified in Article 16.1(a) of the Transparency Regulation",
+      "frequency": "As received",
+      "format": "Tabular",
+      "transparency_regulation_article": "16.1(a)",
+      "table": 2,
+      "smart_classification": {
+        "semantic_type": "transparency",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V",
+          "Transparency Regulation"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T2-081"
+    },
+    {
+      "data_description": "Data specified in Article 16.1(b) of the Transparency Regulation",
+      "frequency": "As received",
+      "format": "Tabular",
+      "transparency_regulation_article": "16.1(b)",
+      "table": 2,
+      "smart_classification": {
+        "semantic_type": "transparency",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V",
+          "Transparency Regulation"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T2-082"
+    },
+    {
+      "data_description": "Data specified in Article 16.1(c) of the Transparency Regulation",
+      "frequency": "As received",
+      "format": "Tabular",
+      "transparency_regulation_article": "16.1(c)",
+      "table": 2,
+      "smart_classification": {
+        "semantic_type": "transparency",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V",
+          "Transparency Regulation"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T2-083"
+    },
+    {
+      "data_description": "Data specified in Article 16.1(d) of the Transparency Regulation",
+      "frequency": "As received",
+      "format": "Tabular",
+      "transparency_regulation_article": "16.1(d)",
+      "table": 2,
+      "smart_classification": {
+        "semantic_type": "transparency",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V",
+          "Transparency Regulation"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T2-084"
+    },
+    {
+      "data_description": "Data specified in Article 17.1(b) of the Transparency Regulation",
+      "frequency": "As received",
+      "format": "Tabular",
+      "transparency_regulation_article": "17.1(b)",
+      "table": 2,
+      "smart_classification": {
+        "semantic_type": "transparency",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V",
+          "Transparency Regulation"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T2-085"
+    },
+    {
+      "data_description": "Data specified in Article 17.1(c) of the Transparency Regulation",
+      "frequency": "As received",
+      "format": "Tabular",
+      "transparency_regulation_article": "17.1(c)",
+      "table": 2,
+      "smart_classification": {
+        "semantic_type": "transparency",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V",
+          "Transparency Regulation"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T2-086"
+    },
+    {
+      "data_description": "Data specified in Article 17.1(i) of the Transparency Regulation",
+      "frequency": "As received",
+      "format": "Tabular",
+      "transparency_regulation_article": "17.1(i)",
+      "table": 2,
+      "smart_classification": {
+        "semantic_type": "transparency",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V",
+          "Transparency Regulation"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T2-087"
+    },
+    {
+      "data_description": "Inside Information Message",
+      "frequency": "As received",
+      "format": "Tabular",
+      "table": 3,
+      "smart_classification": {
+        "semantic_type": "regulatory",
+        "is_computable": false,
+        "data_provider": "BSC Parties (via BMRA)",
+        "bsc_section_references": [
+          "Section V",
+          "REMIT"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T3-088"
+    },
+    {
+      "data_description": "Trading Unit Delivery Mode",
+      "frequency": "As received",
+      "format": "Tabular",
+      "table": 4,
+      "smart_classification": {
+        "semantic_type": "reference_data",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": false,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T4-089"
+    },
+    {
+      "data_description": "Trading Unit Export Volume",
+      "frequency": "As received",
+      "format": "Tabular",
+      "table": 4,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T4-090"
+    },
+    {
+      "data_description": "Trading Unit Import Volume",
+      "frequency": "As received",
+      "format": "Tabular",
+      "table": 4,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "NETSO",
+        "bsc_section_references": [
+          "Section V"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T4-091"
+    },
+    {
+      "data_description": "Settlement Exchange Rate",
+      "frequency": "By 16.00 daily",
+      "format": "Tabular",
+      "table": 5,
+      "smart_classification": {
+        "semantic_type": "financial",
+        "is_computable": true,
+        "data_provider": "SAA",
+        "bsc_section_references": [
+          "Section T"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T5-092"
+    },
+    {
+      "data_description": "Total Exempt Supply Volume Data",
+      "frequency": "Monthly, 1 file per Settlement Run Type, on the 6th working day of the month",
+      "format": "API",
+      "table": 6,
+      "smart_classification": {
+        "semantic_type": "measurement",
+        "is_computable": null,
+        "data_provider": "SAA",
+        "bsc_section_references": [
+          "Section T"
+        ],
+        "ontology_candidate": true,
+        "related_bmrs_codes": []
+      },
+      "item_id": "BMRS-T6-093"
+    }
+  ]
+}
